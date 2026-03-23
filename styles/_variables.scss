@@ -1,20 +1,25 @@
 // Colors
-$color-primary:       #F5A623;
-$color-primary-hover: #D4891A;
+$color-primary:       #FB3333;
+$color-primary-hover: #D92A2A;
+$color-secondary:     #FF0000;
+
+$color-cta:           #FFC700;
+$color-cta-hover:     #D9A800;
 
 $color-bg:            #F0F2F5;
 $color-surface:       #FFFFFF;
 $color-surface-alt:   #E8EBF0;
 
-$color-border:        #D1D9E0;
+$color-border:        #D5D7D9;
 
-$color-text:          #1A1A2E;
+$color-text:          #222222;
 $color-text-muted:    #6B7A8D;
 
 $color-odd-default:   #FFFFFF;
 $color-odd-active:    #F5A623;
 $color-odd-text:      #FFFFFF;
 
+$color-bonus:         $color-primary;
 $color-success:       #27AE60;
 $color-danger:        #E74C3C;
 $color-live:          #E74C3C;
@@ -36,6 +41,7 @@ $radius-full: 9999px;
 // Typography
 $font-family: var(--font-rubik), Arial, sans-serif;
 
+$font-size-2xs:  0.625rem;  // 10px
 $font-size-xs:   0.6875rem; // 11px
 $font-size-sm:   0.75rem;   // 12px
 $font-size-md:   0.875rem;  // 14px
@@ -49,9 +55,9 @@ $font-weight-semibold: 600;
 $font-weight-bold:     700;
 
 // Layout
-$header-height:    56px;
+$header-height:    50px;
 $tabs-height:      44px;
-$betslip-fab-size: 56px;
+$betslip-fab-size: 62px;
 
 // Transitions
 $transition-fast:   150ms ease;

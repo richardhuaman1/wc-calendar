@@ -1,12 +1,90 @@
 @use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
 
 .header {
+  @include flex-between;
+
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  height: 50px;
+  height: $header-height;
+  padding: 0 $spacing-lg;
   background: $color-surface;
   border-bottom: 1px solid $color-border;
   z-index: 100;
+}
+
+.left {
+  @include flex-center;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+}
+
+.balance {
+  @include flex-column;
+
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.amount {
+  font-size: $font-size-md;
+  font-weight: $font-weight-bold;
+  color: $color-text;
+  line-height: 1;
+}
+
+.bonusRow {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  color: $color-primary;
+}
+
+.bonus {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  line-height: 1;
+  color: $color-primary;
+}
+
+.reloadBtn {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  height: 36px;
+  padding: 6px 10px;
+  background: $color-cta;
+  border-radius: $radius-sm;
+  border-top: 1px solid $color-cta;
+  font-size: $font-size-md;
+  font-weight: $font-weight-medium;
+  line-height: 24px;
+  color: $color-text;
+  white-space: nowrap;
+  transition: background $transition-fast;
+
+  &:hover {
+    background: $color-cta-hover;
+    border-top-color: $color-cta-hover;
+  }
+}
+
+.menuBtn {
+  @include flex-center;
+
+  width: 36px;
+  height: 36px;
+  border-radius: $radius-sm;
+  color: $color-text;
+  transition: background $transition-fast;
+
+  &:hover {
+    background: $color-surface-alt;
+  }
 }
