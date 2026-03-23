@@ -1,0 +1,100 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+.wrapper {
+  position: relative;
+  width: 100%;
+  height: $tabs-wrapper-height;
+  overflow: hidden;
+  background:
+    radial-gradient(circle 85px at 42px 50%, #0326DE 99%, transparent 100%),
+    radial-gradient(circle 85px at 183px 50%, #FF0004 99%, transparent 100%),
+    radial-gradient(circle 85px at 323px 50%, #27A550 99%, transparent 100%),
+    $color-tabs-bg;
+  backdrop-filter: blur(7px);
+  display: flex;
+  align-items: center;
+  padding: 0 $spacing-md;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(37px);
+    z-index: 1;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #FFFFFF 100%);
+    z-index: 2;
+  }
+}
+
+.container {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  height: $tabs-height;
+  width: 100%;
+  padding: 4px;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 30px;
+  border: 1px solid #FFFFFF;
+  box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.20);
+  backdrop-filter: blur(8px);
+}
+
+.brand {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  padding: 0 $spacing-md;
+  width: 75.5px;
+  height: 27.58px;
+}
+
+
+.tabs {
+  display: flex;
+  flex: 1;
+  gap: 2px;
+}
+
+.tab {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  gap: 2px;
+  padding: 6px 4px;
+  height: 40px;
+  border-radius: 20px;
+  color: $color-tab-inactive;
+  transition: background $transition-fast, color $transition-fast;
+
+  &.active {
+    background: rgba(0, 0, 0, 0.1);
+    color: $color-secondary;
+  }
+}
+
+.icon {
+  @include flex-center;
+}
+
+.label {
+  font-size: $font-size-3xs;
+  font-weight: $font-weight-regular;
+  line-height: 10px;
+  color: inherit;
+  white-space: nowrap;
+}
