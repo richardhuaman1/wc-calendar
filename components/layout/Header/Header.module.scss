@@ -9,9 +9,10 @@
   left: 0;
   right: 0;
   height: $header-height;
-  padding: 0 $spacing-lg;
+  padding: 6px 12px 8px;
   background: $color-surface;
-  border-bottom: 1px solid $color-border;
+  border-bottom: 2px solid $color-primary;
+  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.21);
   z-index: 100;
 }
 
