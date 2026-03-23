@@ -1,0 +1,12 @@
+@use '../../../styles/variables' as *;
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50px;
+  background: $color-surface;
+  border-bottom: 1px solid $color-border;
+  z-index: 100;
+}

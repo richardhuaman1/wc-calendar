@@ -1,0 +1,53 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+.button {
+  @include flex-column;
+  @include clickable;
+
+  align-items: center;
+  gap: $spacing-xs;
+  padding: $spacing-sm $spacing-md;
+  background: $color-odd-default;
+  border: 1px solid $color-border;
+  border-radius: $radius-sm;
+  min-width: 64px;
+  transition: background $transition-fast, border-color $transition-fast;
+
+  &:hover {
+    background: $color-surface-alt;
+    border-color: $color-primary;
+  }
+}
+
+.label {
+  font-size: $font-size-xs;
+  color: $color-text-muted;
+  @include truncate;
+}
+
+.odd {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-bold;
+  color: $color-odd-text;
+}
+
+.active {
+  background: $color-primary;
+  border-color: $color-primary;
+
+  &:hover {
+    background: $color-primary-hover;
+    border-color: $color-primary-hover;
+  }
+
+  .label,
+  .odd {
+    color: $color-bg;
+  }
+}
+
+.suspended {
+  opacity: 0.4;
+  pointer-events: none;
+}

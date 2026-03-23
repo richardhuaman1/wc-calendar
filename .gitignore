@@ -24,6 +24,7 @@
 .DS_Store
 *.pem
 PLAN.md
+RULES.md
 
 # debug
 npm-debug.log*

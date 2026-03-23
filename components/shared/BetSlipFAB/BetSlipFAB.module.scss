@@ -1,0 +1,12 @@
+@use '../../../styles/variables' as *;
+
+.fab {
+  position: fixed;
+  bottom: $spacing-xl;
+  right: $spacing-xl;
+  width: $betslip-fab-size;
+  height: $betslip-fab-size;
+  border-radius: $radius-full;
+  background: $color-primary;
+  z-index: 200;
+}
