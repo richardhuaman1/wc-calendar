@@ -1,4 +1,6 @@
-import { CalendarEvent } from "@/types/event";
+"use client";
+
+import { CalendarEvent, OddsOption } from "@/types/event";
 import { getDayAbbreviation, isSameDay, PROJECT_TODAY } from "@/utils/date";
 import EventCard from "@/components/agenda/EventCard/EventCard";
 import styles from "./DayGroup.module.scss";
@@ -8,9 +10,18 @@ interface DayGroupProps {
   events: CalendarEvent[];
   expandedEventId: string | null;
   onExpand: (id: string) => void;
+  onOddsToggle: (odd: OddsOption, eventId: string, eventName: string) => void;
+  isOddSelected: (oddId: string) => boolean;
 }
 
-export default function DayGroup({ date, events, expandedEventId, onExpand }: DayGroupProps) {
+export default function DayGroup({
+  date,
+  events,
+  expandedEventId,
+  onExpand,
+  onOddsToggle,
+  isOddSelected,
+}: DayGroupProps) {
   const isToday = isSameDay(date, PROJECT_TODAY);
   const dayAbbr = getDayAbbreviation(date);
   const dayNumber = date.getDate();
@@ -31,6 +42,8 @@ export default function DayGroup({ date, events, expandedEventId, onExpand }: Da
             event={event}
             isExpanded={expandedEventId === event.id}
             onExpand={() => onExpand(event.id)}
+            onOddsToggle={onOddsToggle}
+            isOddSelected={isOddSelected}
           />
         ))}
       </div>

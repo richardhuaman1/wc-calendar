@@ -296,55 +296,10 @@
   width: 100%;
 }
 
+// Layout override: stretch each OddsButton to fill the row equally
 .oddsBtn {
-  @include flex-column;
-
-  justify-content: center;
-  align-items: stretch;
-  padding: $spacing-xs $spacing-sm;
-  height: 40px;
-  min-height: 40px;
   flex: 1;
   min-width: 0;
-  background: $color-surface-alt;
-  border-radius: $radius-sm;
-  transition: background $transition-fast;
-
-  &:hover:not(.oddsBtnActive) {
-    background: $color-border;
-  }
-}
-
-.oddsBtnActive {
-  background: $color-primary;
-
-  .oddsValue {
-    color: $color-surface;
-  }
-
-  .oddsLabel {
-    color: $color-surface;
-    opacity: 1;
-  }
-}
-
-.oddsValue {
-  font-size: $font-size-md;
-  font-weight: $font-weight-medium;
-  color: $color-text;
-  line-height: 115%;
-  text-align: center;
-}
-
-.oddsLabel {
-  font-size: $font-size-md;
-  color: $color-text;
-  opacity: $opacity-muted;
-  line-height: 115%;
-  text-align: center;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 // ── Dots ────────────────────────────────────────────────────

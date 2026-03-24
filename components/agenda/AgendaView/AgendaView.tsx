@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { CalendarEvent, DayGroup as DayGroupType } from "@/types/event";
 import { isSameDay, PROJECT_TODAY } from "@/utils/date";
+import { useBetslip } from "@/hooks/useBetslip";
 import DayGroup from "@/components/agenda/DayGroup/DayGroup";
 import styles from "./AgendaView.module.scss";
 
@@ -11,6 +12,8 @@ interface AgendaViewProps {
 }
 
 export default function AgendaView({ events }: AgendaViewProps) {
+  const { isOddSelected, toggleOdd } = useBetslip();
+
   const dayGroups = useMemo<DayGroupType[]>(() => {
     const map = new Map<string, DayGroupType>();
 
@@ -47,6 +50,8 @@ export default function AgendaView({ events }: AgendaViewProps) {
           events={group.events}
           expandedEventId={expandedEventId}
           onExpand={handleExpand}
+          onOddsToggle={toggleOdd}
+          isOddSelected={isOddSelected}
         />
       ))}
     </div>

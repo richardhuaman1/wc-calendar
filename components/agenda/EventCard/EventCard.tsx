@@ -1,11 +1,9 @@
 "use client";
 
-import { CalendarEvent } from "@/types/event";
+import { CalendarEvent, OddsOption } from "@/types/event";
 import { TBD } from "@/utils/constants";
-import { toggleSelection, selectIsSelected } from "@/store/betslipSlice";
-import { useAppDispatch } from "@/hooks/useAppDispatch";
-import { useAppSelector } from "@/hooks/useAppSelector";
 import Flag from "@/components/shared/Flag/Flag";
+import OddsButton from "@/components/shared/OddsButton/OddsButton";
 import ATIsotipoIcon from "@/components/shared/icons/ATIsotipoIcon";
 import BetBuilderIcon from "@/components/shared/icons/BetBuilderIcon";
 import EarlyPayoutIcon from "@/components/shared/icons/EarlyPayoutIcon";
@@ -15,6 +13,14 @@ import StatsIcon from "@/components/shared/icons/StatsIcon";
 import WorldCupLeagueIcon from "@/components/shared/icons/WorldCupLeagueIcon";
 import styles from "./EventCard.module.scss";
 
+interface EventCardProps {
+  event: CalendarEvent;
+  isExpanded: boolean;
+  onExpand: () => void;
+  onOddsToggle: (odd: OddsOption, eventId: string, eventName: string) => void;
+  isOddSelected: (oddId: string) => boolean;
+}
+
 function TeamName({ name }: { name: string }) {
   if (name === TBD) {
     return <span className={styles.nameTbd}>(Por definir)</span>;
@@ -22,60 +28,17 @@ function TeamName({ name }: { name: string }) {
   return <>{name}</>;
 }
 
-interface OddOption {
-  id: string;
-  value: string;
-  label: string;
-}
-
-interface EventCardProps {
-  event: CalendarEvent;
-  isExpanded: boolean;
-  onExpand: () => void;
-}
-
-interface OddsBtnProps {
-  odd: OddOption;
-  eventId: string;
-  eventName: string;
-}
-
-function OddsBtn({ odd, eventId, eventName }: OddsBtnProps) {
-  const dispatch = useAppDispatch();
-  const isSelected = useAppSelector(selectIsSelected(odd.id));
-
-  function handleClick(e: React.MouseEvent) {
-    e.stopPropagation();
-    dispatch(toggleSelection({
-      id: odd.id,
-      eventId,
-      eventName,
-      outcomeName: odd.label,
-      odds: odd.value,
-    }));
-  }
-
-  return (
-    <button
-      className={`${styles.oddsBtn} ${isSelected ? styles.oddsBtnActive : ""}`}
-      onClick={handleClick}
-      title={odd.label}
-    >
-      <span className={styles.oddsValue}>{odd.value}</span>
-      <span className={styles.oddsLabel}>{odd.label}</span>
-    </button>
-  );
-}
-
-export default function EventCard({ event, isExpanded, onExpand }: EventCardProps) {
+export default function EventCard({
+  event,
+  isExpanded,
+  onExpand,
+  onOddsToggle,
+  isOddSelected,
+}: EventCardProps) {
   const home = event.participants.find((p) => p.role === "Home");
   const away = event.participants.find((p) => p.role === "Away");
 
-  const odds: OddOption[] = [
-    { id: `${event.id}:home`, value: "1.45", label: home?.name ?? TBD },
-    { id: `${event.id}:draw`, value: "2.00", label: "Empate" },
-    { id: `${event.id}:away`, value: "2.25", label: away?.name ?? TBD },
-  ];
+  const firstMarket = event.markets?.[0] ?? null;
 
   return (
     <div className={`${styles.card} ${isExpanded ? styles.cardExpanded : ""}`}>
@@ -141,16 +104,27 @@ export default function EventCard({ event, isExpanded, onExpand }: EventCardProp
             ))}
           </div>
 
-          <div className={styles.marketRow}>
-            <span className={styles.marketName}>Resultado del partido (1x2)</span>
-            <PAIcon />
-          </div>
+          {firstMarket && (
+            <>
+              <div className={styles.marketRow}>
+                <span className={styles.marketName}>{firstMarket.name}</span>
+                <PAIcon />
+              </div>
 
-          <div className={styles.oddsRow}>
-            {odds.map((odd) => (
-              <OddsBtn key={odd.id} odd={odd} eventId={event.id} eventName={event.name} />
-            ))}
-          </div>
+              <div className={styles.oddsRow}>
+                {firstMarket.options.map((odd) => (
+                  <OddsButton
+                    key={odd.id}
+                    odd={odd.value}
+                    label={odd.label}
+                    isActive={isOddSelected(odd.id)}
+                    onClick={() => onOddsToggle(odd, event.id, event.name)}
+                    className={styles.oddsBtn}
+                  />
+                ))}
+              </div>
+            </>
+          )}
 
           <div className={styles.dots}>
             {Array.from({ length: 6 }).map((_, i) => (
