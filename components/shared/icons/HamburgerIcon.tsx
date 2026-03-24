@@ -1,5 +1,4 @@
 interface HamburgerIconProps {
-  size?: number;
   color?: string;
 }
 

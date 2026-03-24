@@ -25,7 +25,7 @@ export default function Header() {
         <button className={styles.reloadBtn}>Recargar</button>
 
         <button className={styles.menuBtn}>
-          <HamburgerIcon size={20} />
+          <HamburgerIcon />
         </button>
       </div>
     </header>
