@@ -1,3 +1,15 @@
+export interface OddsOption {
+  id: string;
+  label: string;
+  value: string;
+}
+
+export interface Market {
+  id: string;
+  name: string;
+  options: OddsOption[];
+}
+
 export interface EventParticipant {
   id: string;
   name: string;
@@ -19,6 +31,7 @@ export interface CalendarEvent {
   hasBetBuilder: boolean;
   isEarlyPayout: boolean;
   hasLiveStream?: boolean;
+  markets?: Market[];
 }
 
 export interface DayGroup {

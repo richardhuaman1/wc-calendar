@@ -1,4 +1,4 @@
-import { CalendarEvent } from "@/types/event";
+import { CalendarEvent, Market } from "@/types/event";
 import { TBD } from "@/utils/constants";
 
 const MOCK_EVENTS: CalendarEvent[] = [
@@ -17,6 +17,17 @@ const MOCK_EVENTS: CalendarEvent[] = [
     hasBetBuilder: true,
     isEarlyPayout: true,
     hasLiveStream: true,
+    markets: [
+      {
+        id: "m1",
+        name: "Resultado del partido (1x2)",
+        options: [
+          { id: "1:home", label: "México", value: "1.45" },
+          { id: "1:draw", label: "Empate", value: "2.00" },
+          { id: "1:away", label: "Sudáfrica", value: "2.25" },
+        ],
+      } satisfies Market,
+    ],
   },
   {
     id: "2",
