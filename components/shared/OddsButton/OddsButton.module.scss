@@ -3,47 +3,56 @@
 
 .button {
   @include flex-column;
-  @include clickable;
 
-  align-items: center;
-  gap: $spacing-xs;
-  padding: $spacing-sm $spacing-md;
-  background: $color-odd-default;
-  border: 1px solid $color-border;
-  border-radius: $radius-sm;
+  justify-content: center;
+  align-items: stretch;
+  padding: $spacing-xs $spacing-sm;
+  height: 40px;
+  min-height: 40px;
   min-width: 64px;
-  transition: background $transition-fast, border-color $transition-fast;
+  cursor: pointer;
+  user-select: none;
+  background: $color-odd-default;
+  border-radius: $radius-sm;
+  transition: background $transition-fast;
 
-  &:hover {
-    background: $color-surface-alt;
-    border-color: $color-primary;
+  &:hover:not(.active) {
+    background: $color-border;
+  }
+
+  &:active {
+    opacity: 0.8;
   }
 }
 
-.label {
-  font-size: $font-size-xs;
-  color: $color-text-muted;
-  @include truncate;
+.odd {
+  font-size: $font-size-md;
+  font-weight: $font-weight-medium;
+  color: $color-odd-text;
+  line-height: 115%;
+  text-align: center;
 }
 
-.odd {
-  font-size: $font-size-sm;
-  font-weight: $font-weight-bold;
+.label {
+  font-size: $font-size-md;
   color: $color-odd-text;
+  opacity: $opacity-muted;
+  line-height: 115%;
+  text-align: center;
+  @include truncate;
 }
 
 .active {
   background: $color-primary;
-  border-color: $color-primary;
+
+  .odd,
+  .label {
+    color: $color-surface;
+    opacity: 1;
+  }
 
   &:hover {
     background: $color-primary-hover;
-    border-color: $color-primary-hover;
-  }
-
-  .label,
-  .odd {
-    color: $color-bg;
   }
 }
 

@@ -1,3 +1,5 @@
+"use client";
+
 import styles from "./OddsButton.module.scss";
 
 interface OddsButtonProps {
@@ -6,6 +8,7 @@ interface OddsButtonProps {
   isActive?: boolean;
   isSuspended?: boolean;
   onClick?: () => void;
+  className?: string;
 }
 
 export default function OddsButton({
@@ -14,19 +17,26 @@ export default function OddsButton({
   isActive = false,
   isSuspended = false,
   onClick,
+  className,
 }: OddsButtonProps) {
-  const className = [
+  const cls = [
     styles.button,
     isActive ? styles.active : "",
     isSuspended ? styles.suspended : "",
+    className ?? "",
   ]
     .filter(Boolean)
     .join(" ");
 
   return (
-    <button className={className} onClick={onClick} disabled={isSuspended}>
-      <span className={styles.label}>{label}</span>
+    <button
+      className={cls}
+      onClick={onClick}
+      disabled={isSuspended}
+      title={label}
+    >
       <span className={styles.odd}>{odd}</span>
+      <span className={styles.label}>{label}</span>
     </button>
   );
 }

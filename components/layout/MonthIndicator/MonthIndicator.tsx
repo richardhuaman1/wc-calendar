@@ -1,3 +1,5 @@
+"use client";
+
 import styles from "./MonthIndicator.module.scss";
 
 interface MonthIndicatorProps {

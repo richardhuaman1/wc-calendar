@@ -1,3 +1,5 @@
+"use client";
+
 import { ViewType } from "@/types/view";
 import AgendaIcon from "@/components/shared/icons/AgendaIcon";
 import ThreeDaysIcon from "@/components/shared/icons/ThreeDaysIcon";
