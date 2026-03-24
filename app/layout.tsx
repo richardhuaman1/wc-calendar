@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Rubik } from "next/font/google";
+import ReduxProvider from "@/store/provider";
+import "flag-icons/css/flag-icons.min.css";
 import "./globals.scss";
 
 const rubik = Rubik({
@@ -20,7 +22,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" className={rubik.variable}>
-      <body>{children}</body>
+      <body>
+        <ReduxProvider>{children}</ReduxProvider>
+      </body>
     </html>
   );
 }
