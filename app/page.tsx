@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Header from "@/components/layout/Header/Header";
 import ViewTabs, { ViewType } from "@/components/layout/ViewTabs/ViewTabs";
+import MonthIndicator from "@/components/layout/MonthIndicator/MonthIndicator";
 import BetSlipFAB from "@/components/shared/BetSlipFAB/BetSlipFAB";
 import styles from "./page.module.scss";
 
@@ -14,6 +15,7 @@ export default function Home() {
       <Header />
       <main className={styles.main}>
         <ViewTabs activeView={activeView} onViewChange={setActiveView} />
+        <MonthIndicator month="Junio" />
       </main>
       <BetSlipFAB />
     </div>
