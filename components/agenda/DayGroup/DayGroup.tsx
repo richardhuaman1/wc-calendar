@@ -1,0 +1,39 @@
+import { CalendarEvent } from "@/types/event";
+import { getDayAbbreviation, isSameDay, PROJECT_TODAY } from "@/utils/date";
+import EventCard from "../EventCard/EventCard";
+import styles from "./DayGroup.module.scss";
+
+interface DayGroupProps {
+  date: Date;
+  events: CalendarEvent[];
+  expandedEventId: string | null;
+  onExpand: (id: string) => void;
+}
+
+export default function DayGroup({ date, events, expandedEventId, onExpand }: DayGroupProps) {
+  const isToday = isSameDay(date, PROJECT_TODAY);
+  const dayAbbr = getDayAbbreviation(date);
+  const dayNumber = date.getDate();
+
+  return (
+    <div className={styles.group}>
+      <div className={styles.indicator}>
+        <span className={styles.dayName}>{dayAbbr}</span>
+        <span className={`${styles.dayNumber} ${isToday ? styles.today : ""}`}>
+          {dayNumber}
+        </span>
+      </div>
+
+      <div className={styles.events}>
+        {events.map((event) => (
+          <EventCard
+            key={event.id}
+            event={event}
+            isExpanded={expandedEventId === event.id}
+            onExpand={() => onExpand(event.id)}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}

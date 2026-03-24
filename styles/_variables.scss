@@ -65,5 +65,6 @@ $tabs-height:          48px;
 $betslip-fab-size:     62px;
 
 // Transitions
-$transition-fast:   150ms ease;
-$transition-normal: 250ms ease;
+$transition-fast:       150ms ease;
+$transition-normal:     250ms ease;
+$transition-accordion:  320ms cubic-bezier(0.4, 0, 0.2, 1);
