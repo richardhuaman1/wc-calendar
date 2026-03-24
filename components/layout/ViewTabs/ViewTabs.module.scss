@@ -6,34 +6,44 @@
   width: 100%;
   height: $tabs-wrapper-height;
   overflow: hidden;
-  background:
-    radial-gradient(circle 85px at 42px 50%, #0326DE 99%, transparent 100%),
-    radial-gradient(circle 85px at 183px 50%, #FF0004 99%, transparent 100%),
-    radial-gradient(circle 85px at 323px 50%, #27A550 99%, transparent 100%),
-    $color-tabs-bg;
+  background: $color-tabs-bg;
   backdrop-filter: blur(7px);
+  border-bottom: 1px solid #FFFFFF;
   display: flex;
   align-items: center;
   padding: 0 $spacing-md;
-
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(37px);
-    z-index: 1;
-  }
-
-  &::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #FFFFFF 100%);
-    z-index: 2;
-  }
 }
 
+.circle1,
+.circle2,
+.circle3 {
+  position: absolute;
+  width: 170px;
+  height: 170px;
+  top: calc(50% - 85px);
+  border-radius: 50%;
+}
+
+.circle1 { left: -43px;  background: #0326DE; }
+.circle2 { left: 98px;   background: #FF0004; }
+.circle3 { left: 238px;  background: #27A550; }
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(37px);
+  z-index: 1;
+}
+
+.gradientFade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #FFFFFF 100%);
+  z-index: 2;
+}
+
+// — Pill container (encima de todas las capas decorativas)
 .container {
   position: relative;
   z-index: 3;
@@ -60,7 +70,6 @@
   width: 75.5px;
   height: 27.58px;
 }
-
 
 .tabs {
   display: flex;

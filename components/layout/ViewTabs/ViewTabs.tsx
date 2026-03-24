@@ -20,24 +20,30 @@ const tabs: { id: ViewType; label: string; icon: React.ReactNode }[] = [
 export default function ViewTabs({ activeView, onViewChange }: ViewTabsProps) {
   return (
     <div className={styles.wrapper}>
-    <div className={styles.container}>
-      <div className={styles.brand}>
-        <Fifa2026Logo />
-      </div>
+      <div className={styles.circle1} />
+      <div className={styles.circle2} />
+      <div className={styles.circle3} />
+      <div className={styles.overlay} />
+      <div className={styles.gradientFade} />
 
-      <div className={styles.tabs}>
-        {tabs.map(({ id, label, icon }) => (
-          <button
-            key={id}
-            className={`${styles.tab} ${activeView === id ? styles.active : ""}`}
-            onClick={() => onViewChange(id)}
-          >
-            <span className={styles.icon}>{icon}</span>
-            <span className={styles.label}>{label}</span>
-          </button>
-        ))}
+      <div className={styles.container}>
+        <div className={styles.brand}>
+          <Fifa2026Logo />
+        </div>
+
+        <div className={styles.tabs}>
+          {tabs.map(({ id, label, icon }) => (
+            <button
+              key={id}
+              className={`${styles.tab} ${activeView === id ? styles.active : ""}`}
+              onClick={() => onViewChange(id)}
+            >
+              <span className={styles.icon}>{icon}</span>
+              <span className={styles.label}>{label}</span>
+            </button>
+          ))}
+        </div>
       </div>
-    </div>
     </div>
   );
 }
