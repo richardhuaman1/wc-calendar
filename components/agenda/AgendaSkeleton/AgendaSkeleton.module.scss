@@ -23,8 +23,8 @@ $shimmer-gradient: linear-gradient(
 .tabsPill {
   margin: $spacing-md $spacing-md $spacing-sm;
   height: 48px;
-  background: #F6F6F6;
-  border-radius: 99px;
+  background: $color-surface-alt;
+  border-radius: $radius-full;
 }
 
 .content {
@@ -44,23 +44,23 @@ $shimmer-gradient: linear-gradient(
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
-  padding-top: 4px;
+  gap: $spacing-xs;
+  padding-top: $spacing-xs;
   flex-shrink: 0;
 }
 
 .dayName {
   width: 19px;
   height: 9px;
-  background: #EFEFEF;
-  border-radius: 3px;
+  background: $color-border-light;
+  border-radius: $radius-sm;
 }
 
 .dayNumber {
   width: 19px;
   height: 17px;
-  background: #EFEFEF;
-  border-radius: 3px;
+  background: $color-border-light;
+  border-radius: $radius-sm;
 }
 
 .cards {
@@ -73,7 +73,7 @@ $shimmer-gradient: linear-gradient(
 .card {
   position: relative;
   height: 58px;
-  background: #F8F8F8;
+  background: $color-surface-alt;
   border-radius: $radius-md;
   overflow: hidden;
   display: flex;
@@ -103,35 +103,35 @@ $shimmer-gradient: linear-gradient(
 .titleChip {
   width: 132px;
   height: 21px;
-  background: #EFEFEF;
-  border-radius: 3px;
+  background: $color-border-light;
+  border-radius: $radius-sm;
 }
 
 .chevronChip {
   width: 18px;
   height: 21px;
-  background: #EFEFEF;
-  border-radius: 3px;
+  background: $color-border-light;
+  border-radius: $radius-sm;
 }
 
 .subtitleChip {
   width: 164px;
   height: 13px;
-  background: #EFEFEF;
-  border-radius: 3px;
+  background: $color-border-light;
+  border-radius: $radius-sm;
 }
 
 .groupChip {
   width: 47px;
   height: 13px;
-  background: #EFEFEF;
-  border-radius: 3px;
+  background: $color-border-light;
+  border-radius: $radius-sm;
 }
 
 .separator {
   width: 164px;
   height: 13px;
-  background: #EFEFEF;
-  border-radius: 3px;
-  margin: 4px 0 4px 27px;
+  background: $color-border-light;
+  border-radius: $radius-sm;
+  margin: $spacing-xs 0 $spacing-xs 27px;
 }

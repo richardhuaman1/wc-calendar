@@ -12,8 +12,8 @@
   align-items: center;
 
   width: $betslip-fab-size;
-  padding: 12px;
-  gap: 4px;
+  padding: $spacing-md;
+  gap: $spacing-xs;
 
   background: $color-surface;
   border-radius: $radius-full;

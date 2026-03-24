@@ -1,8 +1,8 @@
+import { ViewType } from "@/types/view";
 import AgendaIcon from "@/components/shared/icons/AgendaIcon";
 import ThreeDaysIcon from "@/components/shared/icons/ThreeDaysIcon";
 import WeekIcon from "@/components/shared/icons/WeekIcon";
 import Fifa2026Logo from "@/components/shared/icons/Fifa2026Logo";
-import { ViewType } from "@/types/view";
 import styles from "./ViewTabs.module.scss";
 
 interface ViewTabsProps {

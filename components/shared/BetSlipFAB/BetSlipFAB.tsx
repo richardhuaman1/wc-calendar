@@ -9,7 +9,7 @@ export default function BetSlipFAB() {
   const count = useAppSelector(selectCount);
 
   return (
-    <button className={styles.fab}>
+    <button className={styles.fab} aria-label={`Cupón de apuestas${count > 0 ? `, ${count} selección${count !== 1 ? "es" : ""}` : ""}`}>
       <div className={styles.iconWrapper}>
         <CouponIcon />
         {count > 0 && (

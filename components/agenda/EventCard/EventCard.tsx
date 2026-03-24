@@ -1,20 +1,19 @@
 "use client";
 
 import { CalendarEvent } from "@/types/event";
+import { TBD } from "@/utils/constants";
+import { toggleSelection, selectIsSelected } from "@/store/betslipSlice";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { useAppSelector } from "@/hooks/useAppSelector";
-import { toggleSelection, selectIsSelected } from "@/store/betslipSlice";
 import Flag from "@/components/shared/Flag/Flag";
-import WorldCupLeagueIcon from "@/components/shared/icons/WorldCupLeagueIcon";
-import PlayIcon from "@/components/shared/icons/PlayIcon";
 import ATIsotipoIcon from "@/components/shared/icons/ATIsotipoIcon";
-import StatsIcon from "@/components/shared/icons/StatsIcon";
 import BetBuilderIcon from "@/components/shared/icons/BetBuilderIcon";
 import EarlyPayoutIcon from "@/components/shared/icons/EarlyPayoutIcon";
 import PAIcon from "@/components/shared/icons/PAIcon";
+import PlayIcon from "@/components/shared/icons/PlayIcon";
+import StatsIcon from "@/components/shared/icons/StatsIcon";
+import WorldCupLeagueIcon from "@/components/shared/icons/WorldCupLeagueIcon";
 import styles from "./EventCard.module.scss";
-
-const TBD = "Por definir";
 
 function TeamName({ name }: { name: string }) {
   if (name === TBD) {

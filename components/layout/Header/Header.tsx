@@ -24,7 +24,7 @@ export default function Header() {
 
         <button className={styles.reloadBtn}>Recargar</button>
 
-        <button className={styles.menuBtn}>
+        <button className={styles.menuBtn} aria-label="Abrir menú">
           <HamburgerIcon />
         </button>
       </div>

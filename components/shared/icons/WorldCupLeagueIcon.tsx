@@ -1,6 +1,6 @@
 export default function WorldCupLeagueIcon() {
   return (
-    <svg width="21" height="16" viewBox="0 0 21 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width="21" height="16" viewBox="0 0 21 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <g filter="url(#filter0_d_4048_1557)">
         <g clipPath="url(#clip0_4048_1557)">
           <path d="M18 1H2C0.89543 1 0 1.89543 0 3V13C0 14.1046 0.89543 15 2 15H18C19.1046 15 20 14.1046 20 13V3C20 1.89543 19.1046 1 18 1Z" fill="white"/>

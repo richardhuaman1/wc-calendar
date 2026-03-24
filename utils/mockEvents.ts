@@ -1,4 +1,5 @@
 import { CalendarEvent } from "@/types/event";
+import { TBD } from "@/utils/constants";
 
 const MOCK_EVENTS: CalendarEvent[] = [
   {
@@ -19,14 +20,14 @@ const MOCK_EVENTS: CalendarEvent[] = [
   },
   {
     id: "2",
-    name: "República de Corea vs Por definir",
+    name: `República de Corea vs ${TBD}`,
     groupName: "Grupo A",
     time: "14:00",
     startDate: new Date("2026-06-11T14:00:00"),
     league: "Copa Mundial 2026",
     participants: [
       { id: "2a", name: "República de Corea", country: "KR", role: "Home" },
-      { id: "2b", name: "Por definir", country: "", role: "Away" },
+      { id: "2b", name: TBD, country: "", role: "Away" },
     ],
     hasStats: true,
     hasBetBuilder: true,
@@ -34,14 +35,14 @@ const MOCK_EVENTS: CalendarEvent[] = [
   },
   {
     id: "3",
-    name: "Canadá vs Por definir",
+    name: `Canadá vs ${TBD}`,
     groupName: "Grupo B",
     time: "14:00",
     startDate: new Date("2026-06-12T14:00:00"),
     league: "Copa Mundial 2026",
     participants: [
       { id: "3a", name: "Canadá", country: "CA", role: "Home" },
-      { id: "3b", name: "Por definir", country: "", role: "Away" },
+      { id: "3b", name: TBD, country: "", role: "Away" },
     ],
     hasStats: true,
     hasBetBuilder: true,
@@ -94,14 +95,14 @@ const MOCK_EVENTS: CalendarEvent[] = [
   },
   {
     id: "8",
-    name: "Por definir vs Por definir",
+    name: `${TBD} vs ${TBD}`,
     groupName: "16vos",
     time: "16:00",
     startDate: new Date("2026-06-13T16:00:00"),
     league: "Copa Mundial 2026",
     participants: [
-      { id: "8a", name: "Por definir", country: "", role: "Home" },
-      { id: "8b", name: "Por definir", country: "", role: "Away" },
+      { id: "8a", name: TBD, country: "", role: "Home" },
+      { id: "8b", name: TBD, country: "", role: "Away" },
     ],
     hasStats: false,
     hasBetBuilder: false,

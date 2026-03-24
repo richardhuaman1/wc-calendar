@@ -8,7 +8,7 @@
   overflow: hidden;
   background: $color-tabs-bg;
   backdrop-filter: blur(7px);
-  border-bottom: 1px solid #FFFFFF;
+  border-bottom: 1px solid $color-surface;
   display: flex;
   align-items: center;
   padding: 0 $spacing-md;
@@ -39,7 +39,7 @@
 .gradientFade {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #FFFFFF 100%);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, $color-surface 100%);
   z-index: 2;
 }
 
@@ -52,10 +52,10 @@
   gap: $spacing-sm;
   height: $tabs-height;
   width: 100%;
-  padding: 4px;
+  padding: $spacing-xs;
   background: rgba(255, 255, 255, 0.7);
-  border-radius: 30px;
-  border: 1px solid #FFFFFF;
+  border-radius: $radius-pill;
+  border: 1px solid $color-surface;
   box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.20);
   backdrop-filter: blur(8px);
 }
@@ -74,7 +74,7 @@
 .tabs {
   display: flex;
   flex: 1;
-  gap: 2px;
+  gap: $spacing-xs;
 }
 
 .tab {
@@ -83,8 +83,8 @@
   justify-content: center;
   align-items: center;
   flex: 1;
-  gap: 2px;
-  padding: 6px 4px;
+  gap: $spacing-xs;
+  padding: $spacing-xs;
   height: 40px;
   border-radius: 20px;
   color: $color-tab-inactive;

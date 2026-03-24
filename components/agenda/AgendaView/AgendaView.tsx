@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { CalendarEvent, DayGroup as DayGroupType } from "@/types/event";
 import { isSameDay, PROJECT_TODAY } from "@/utils/date";
-import DayGroup from "../DayGroup/DayGroup";
+import DayGroup from "@/components/agenda/DayGroup/DayGroup";
 import styles from "./AgendaView.module.scss";
 
 interface AgendaViewProps {

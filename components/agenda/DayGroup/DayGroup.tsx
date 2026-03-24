@@ -1,6 +1,6 @@
 import { CalendarEvent } from "@/types/event";
 import { getDayAbbreviation, isSameDay, PROJECT_TODAY } from "@/utils/date";
-import EventCard from "../EventCard/EventCard";
+import EventCard from "@/components/agenda/EventCard/EventCard";
 import styles from "./DayGroup.module.scss";
 
 interface DayGroupProps {
