@@ -1,11 +1,13 @@
+"use client";
+
 import CouponIcon from "@/components/shared/icons/CouponIcon";
+import { useAppSelector } from "@/hooks/useAppSelector";
+import { selectCount } from "@/store/betslipSlice";
 import styles from "./BetSlipFAB.module.scss";
 
-interface BetSlipFABProps {
-  count?: number;
-}
+export default function BetSlipFAB() {
+  const count = useAppSelector(selectCount);
 
-export default function BetSlipFAB({ count = 1 }: BetSlipFABProps) {
   return (
     <button className={styles.fab}>
       <div className={styles.iconWrapper}>
