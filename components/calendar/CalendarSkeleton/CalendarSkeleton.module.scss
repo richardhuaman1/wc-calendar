@@ -18,6 +18,7 @@ $shimmer-gradient: linear-gradient(
   display: flex;
   flex-direction: column;
   gap: 0;
+  margin-top: $header-height;
 }
 
 .tabsPill {

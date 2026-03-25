@@ -1,7 +1,7 @@
 "use client";
 
 import { ERROR_FALLBACK_MESSAGE, ERROR_RETRY } from "@/utils/labels";
-import styles from "./error.module.scss";
+import styles from "@/styles/error.module.scss";
 
 interface ErrorProps {
   error: Error;
