@@ -1,6 +1,6 @@
 import { type RefObject, useEffect, useRef } from "react";
 import { DayGroup } from "@/types/event";
-import { getMonthName } from "@/utils/date";
+import { formatDateKey, getMonthName } from "@/utils/date";
 import {
   DATA_ATTR_DATE_KEY,
   MONTH_OBSERVER_ROOT_MARGIN,
@@ -33,7 +33,7 @@ export function useMonthObserver(
         });
 
         const topGroup = dayGroups.find((g) =>
-          visibleDateKeys.current.has(g.date.toDateString())
+          visibleDateKeys.current.has(formatDateKey(g.date))
         );
         if (topGroup) onMonthChange(getMonthName(topGroup.date));
       },
