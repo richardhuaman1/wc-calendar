@@ -1,6 +1,3 @@
-// ── Locale ──────────────────────────────────────────────────
-export const APP_LOCALE = "es-PE";
-
 // ── Domain: Participant roles ──────────────────────────────
 export const VENUE_ROLE_HOME = "Home" as const;
 export const VENUE_ROLE_AWAY = "Away" as const;

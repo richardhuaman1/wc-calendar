@@ -1,7 +1,7 @@
 import { ApiEvent, ApiMarket, ApiResponse, ApiSelection } from "@/types/api";
 import { CalendarEvent, EventParticipant, Market, Selection } from "@/types/event";
 import { getCountryCode, getGroupName } from "@/utils/countryMapping";
-import { formatEventTime } from "@/utils/date";
+import { compareDatesAsc, formatEventTime } from "@/utils/date";
 import {
   DEFAULT_TOTAL_GOALS_LINE,
   MARKET_TYPE_OVER_UNDER,
@@ -118,8 +118,7 @@ export async function fetchAllEvents(): Promise<CalendarEvent[]> {
   const { KNOCKOUT_EVENTS } = await import("@/utils/mockEvents");
   const apiEvents = await fetchApiEvents();
 
-  return [...apiEvents, ...KNOCKOUT_EVENTS].sort(
-    (a, b) =>
-      new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
+  return [...apiEvents, ...KNOCKOUT_EVENTS].sort((a, b) =>
+    compareDatesAsc(a.startDate, b.startDate)
   );
 }

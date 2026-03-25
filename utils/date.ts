@@ -1,32 +1,42 @@
-import { APP_LOCALE } from "./constants";
+import {
+  isSameDay as dfnIsSameDay,
+  format,
+  parseISO,
+  compareAsc,
+  getDate,
+} from "date-fns";
+import { es } from "date-fns/locale";
 
 export const PROJECT_TODAY = new Date("2026-06-11T00:00:00");
 
 function toDate(value: string | Date): Date {
-  return value instanceof Date ? value : new Date(value);
+  return typeof value === "string" ? parseISO(value) : value;
 }
 
 export function isSameDay(a: string | Date, b: string | Date): boolean {
-  const da = toDate(a);
-  const db = toDate(b);
-  return (
-    da.getFullYear() === db.getFullYear() &&
-    da.getMonth() === db.getMonth() &&
-    da.getDate() === db.getDate()
-  );
+  return dfnIsSameDay(toDate(a), toDate(b));
 }
 
 export function getDayAbbreviation(date: string | Date): string {
-  return toDate(date).toLocaleDateString(APP_LOCALE, { weekday: "short" });
+  return format(toDate(date), "EEE", { locale: es });
 }
 
 export function getMonthName(date: string | Date): string {
-  return toDate(date).toLocaleDateString(APP_LOCALE, { month: "long" });
+  return format(toDate(date), "MMMM", { locale: es });
 }
 
 export function formatEventTime(isoDate: string): string {
-  const date = new Date(isoDate);
-  const hours = date.getHours().toString().padStart(2, "0");
-  const minutes = date.getMinutes().toString().padStart(2, "0");
-  return `${hours}:${minutes}`;
+  return format(parseISO(isoDate), "HH:mm");
+}
+
+export function getDayNumber(date: string | Date): number {
+  return getDate(toDate(date));
+}
+
+export function compareDatesAsc(a: string | Date, b: string | Date): number {
+  return compareAsc(toDate(a), toDate(b));
+}
+
+export function formatDateKey(date: string | Date): string {
+  return format(toDate(date), "yyyy-MM-dd");
 }

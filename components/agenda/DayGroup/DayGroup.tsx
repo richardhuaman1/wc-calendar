@@ -1,7 +1,7 @@
 "use client";
 
 import { CalendarEvent, IsSelectedFn, OddsToggleFn } from "@/types/event";
-import { getDayAbbreviation, isSameDay, PROJECT_TODAY } from "@/utils/date";
+import { getDayAbbreviation, getDayNumber, isSameDay, PROJECT_TODAY } from "@/utils/date";
 import EventCard from "@/components/agenda/EventCard/EventCard";
 import styles from "./DayGroup.module.scss";
 
@@ -24,7 +24,7 @@ export default function DayGroup({
 }: DayGroupProps) {
   const isToday = isSameDay(date, PROJECT_TODAY);
   const dayAbbr = getDayAbbreviation(date);
-  const dayNumber = date.getDate();
+  const dayNumber = getDayNumber(date);
 
   return (
     <div className={styles.group}>
