@@ -188,6 +188,15 @@
   width: 100%;
 }
 
+// ── Reusable content body (used by EventContent) ─────────────
+
+.contentBody {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+  width: 100%;
+}
+
 // ── Expanded content ─────────────────────────────────────────
 
 .divider {

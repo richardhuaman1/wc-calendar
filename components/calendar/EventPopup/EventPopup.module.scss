@@ -1,0 +1,62 @@
+@use '../../../styles/variables' as *;
+
+// ── Backdrop (transparent, click to close) ──────────────────
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+}
+
+// ── Popup card (Figma: Modal) ───────────────────────────────
+// Figma: width 313px, padding 12px 12px 0px, gap 10px,
+// border-radius 12px, box-shadow dual layer
+.popup {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 12px;
+  gap: 10px;
+  isolation: isolate;
+  width: 313px;
+  background: $color-surface;
+  border-radius: 12px;
+  box-shadow:
+    0px 2px 4px rgba(0, 0, 0, 0.18),
+    0px 8px 19.6px rgba(0, 0, 0, 0.25);
+  z-index: 101;
+  overflow-y: auto;
+  max-height: 70vh;
+  animation: popupFadeIn 150ms ease-out;
+}
+
+@keyframes popupFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+// ── Close button (Figma: 20×20, icon color #5E5E5E) ────────
+.closeBtn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 1;
+  font-size: 12px;
+  line-height: 1;
+  color: #5E5E5E;
+}
