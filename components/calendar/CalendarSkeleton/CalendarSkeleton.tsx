@@ -1,5 +1,5 @@
 import { SKELETON_GROUPS } from "@/utils/constants";
-import styles from "./AgendaSkeleton.module.scss";
+import styles from "./CalendarSkeleton.module.scss";
 
 function SkeletonCard() {
   return (
@@ -33,7 +33,7 @@ function SkeletonDayGroup({ cardCount }: { cardCount: number }) {
   );
 }
 
-export default function AgendaSkeleton() {
+export default function CalendarSkeleton() {
   return (
     <div className={styles.skeleton}>
       <div className={styles.tabsPill} />

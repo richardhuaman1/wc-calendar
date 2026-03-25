@@ -2,7 +2,7 @@
 
 import { CalendarEvent, IsSelectedFn, OddsToggleFn } from "@/types/event";
 import { getDayAbbreviation, getDayNumber, isSameDay, PROJECT_TODAY } from "@/utils/date";
-import EventCard from "@/components/agenda/EventCard/EventCard";
+import EventCard from "@/components/calendar/EventCard/EventCard";
 import styles from "./DayGroup.module.scss";
 
 interface DayGroupProps {

@@ -8,7 +8,7 @@ import ViewTabs from "@/components/layout/ViewTabs/ViewTabs";
 import MonthIndicator from "@/components/layout/MonthIndicator/MonthIndicator";
 import AgendaView, {
   AgendaViewHandle,
-} from "@/components/agenda/AgendaView/AgendaView";
+} from "@/components/calendar/AgendaView/AgendaView";
 import BetSlipFAB from "@/components/shared/BetSlipFAB/BetSlipFAB";
 import styles from "./CalendarShell.module.scss";
 

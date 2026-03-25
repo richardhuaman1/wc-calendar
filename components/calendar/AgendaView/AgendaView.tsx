@@ -8,12 +8,12 @@ import {
   useRef,
 } from "react";
 import { CalendarEvent } from "@/types/event";
-import { PROJECT_TODAY } from "@/utils/date";
+import { formatDateKey, PROJECT_TODAY } from "@/utils/date";
 import { groupEventsByDay } from "@/utils/groupEventsByDay";
 import { useBetslip } from "@/hooks/useBetslip";
 import { useAccordion } from "@/hooks/useAccordion";
 import { useMonthObserver } from "@/hooks/useMonthObserver";
-import DayGroup from "@/components/agenda/DayGroup/DayGroup";
+import DayGroup from "@/components/calendar/DayGroup/DayGroup";
 import styles from "./AgendaView.module.scss";
 
 export interface AgendaViewHandle {
@@ -41,7 +41,7 @@ const AgendaView = forwardRef<AgendaViewHandle, AgendaViewProps>(
 
     useImperativeHandle(ref, () => ({
       scrollToToday() {
-        const todayKey = PROJECT_TODAY.toDateString();
+        const todayKey = formatDateKey(PROJECT_TODAY);
         dayGroupRefs.current
           .get(todayKey)
           ?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -52,7 +52,7 @@ const AgendaView = forwardRef<AgendaViewHandle, AgendaViewProps>(
     return (
       <div className={styles.container}>
         {dayGroups.map((group) => {
-          const dateKey = group.date.toDateString();
+          const dateKey = formatDateKey(group.date);
           return (
             <div
               key={dateKey}

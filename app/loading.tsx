@@ -1,5 +1,5 @@
-import AgendaSkeleton from "@/components/agenda/AgendaSkeleton/AgendaSkeleton";
+import CalendarSkeleton from "@/components/calendar/CalendarSkeleton/CalendarSkeleton";
 
 export default function Loading() {
-  return <AgendaSkeleton />;
+  return <CalendarSkeleton />;
 }
