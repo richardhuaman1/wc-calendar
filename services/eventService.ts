@@ -4,12 +4,16 @@ import { getCountryCode, getGroupName } from "@/utils/countryMapping";
 import { formatEventTime } from "@/utils/date";
 import {
   DEFAULT_TOTAL_GOALS_LINE,
+  MARKET_TYPE_OVER_UNDER,
   REQUIRED_MARKET_TYPE_IDS,
+  VENUE_ROLE_HOME,
 } from "@/utils/constants";
+import { API_ERROR_PREFIX } from "@/utils/labels";
 import envConfig from "./envConfig";
 
 function transformSelection(raw: ApiSelection, marketTypeId: string): Selection {
-  const needsPoints = marketTypeId === "OU200" && raw.Points !== undefined;
+  const needsPoints =
+    marketTypeId === MARKET_TYPE_OVER_UNDER && raw.Points !== undefined;
   const displayName = needsPoints ? `${raw.Name} ${raw.Points}` : raw.Name;
 
   return {
@@ -26,7 +30,7 @@ function transformMarket(raw: ApiMarket): Market {
   const typeId = raw.MarketType._id;
   let selections = raw.Selections;
 
-  if (typeId === "OU200") {
+  if (typeId === MARKET_TYPE_OVER_UNDER) {
     selections = selections.filter((s) => s.Points === DEFAULT_TOTAL_GOALS_LINE);
   }
 
@@ -60,7 +64,7 @@ function transformParticipant(
   homeScore: string,
   awayScore: string
 ): EventParticipant {
-  const isHome = raw.VenueRole === "Home";
+  const isHome = raw.VenueRole === VENUE_ROLE_HOME;
   const rawScore = isHome ? homeScore : awayScore;
 
   return {
@@ -73,8 +77,8 @@ function transformParticipant(
 }
 
 function transformEvent(raw: ApiEvent): CalendarEvent {
-  const home = raw.Participants.find((p) => p.VenueRole === "Home");
-  const away = raw.Participants.find((p) => p.VenueRole === "Away");
+  const home = raw.Participants.find((p) => p.VenueRole === VENUE_ROLE_HOME);
+  const away = raw.Participants.find((p) => p.VenueRole !== VENUE_ROLE_HOME);
 
   return {
     id: raw._id,
@@ -95,13 +99,27 @@ function transformEvent(raw: ApiEvent): CalendarEvent {
   };
 }
 
-export async function fetchEvents(): Promise<CalendarEvent[]> {
+async function fetchApiEvents(): Promise<CalendarEvent[]> {
   const response = await fetch(envConfig.apiUrl);
 
   if (!response.ok) {
-    throw new Error(`Error al obtener eventos: ${response.status}`);
+    throw new Error(`${API_ERROR_PREFIX}: ${response.status}`);
   }
 
   const data = (await response.json()) as ApiResponse;
   return data.Events.map(transformEvent);
+}
+
+/**
+ * Fetches API events and merges them with knockout-stage fixtures,
+ * returning a single chronologically-sorted list.
+ */
+export async function fetchAllEvents(): Promise<CalendarEvent[]> {
+  const { KNOCKOUT_EVENTS } = await import("@/utils/mockEvents");
+  const apiEvents = await fetchApiEvents();
+
+  return [...apiEvents, ...KNOCKOUT_EVENTS].sort(
+    (a, b) =>
+      new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
+  );
 }

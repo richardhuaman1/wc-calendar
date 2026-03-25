@@ -1,6 +1,7 @@
 "use client";
 
-import { ViewType } from "@/types/view";
+import { ViewTab, ViewType } from "@/types/view";
+import { TAB_AGENDA, TAB_THREE_DAYS, TAB_WEEK } from "@/utils/labels";
 import AgendaIcon from "@/components/shared/icons/AgendaIcon";
 import ThreeDaysIcon from "@/components/shared/icons/ThreeDaysIcon";
 import WeekIcon from "@/components/shared/icons/WeekIcon";
@@ -12,10 +13,10 @@ interface ViewTabsProps {
   onViewChange: (view: ViewType) => void;
 }
 
-const tabs: { id: ViewType; label: string; icon: React.ReactNode }[] = [
-  { id: "agenda", label: "Agenda", icon: <AgendaIcon /> },
-  { id: "3dias", label: "3 Días", icon: <ThreeDaysIcon /> },
-  { id: "semana", label: "Semana", icon: <WeekIcon /> },
+const tabs: ViewTab[] = [
+  { id: "agenda", label: TAB_AGENDA, icon: <AgendaIcon /> },
+  { id: "3dias", label: TAB_THREE_DAYS, icon: <ThreeDaysIcon /> },
+  { id: "semana", label: TAB_WEEK, icon: <WeekIcon /> },
 ];
 
 export default function ViewTabs({ activeView, onViewChange }: ViewTabsProps) {

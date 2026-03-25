@@ -1,6 +1,5 @@
+import { SKELETON_GROUPS } from "@/utils/constants";
 import styles from "./AgendaSkeleton.module.scss";
-
-const GROUPS = [3, 3, 3];
 
 function SkeletonCard() {
   return (
@@ -39,10 +38,10 @@ export default function AgendaSkeleton() {
     <div className={styles.skeleton}>
       <div className={styles.tabsPill} />
       <div className={styles.content}>
-        {GROUPS.map((count, i) => (
+        {SKELETON_GROUPS.map((count, i) => (
           <div key={i}>
             <SkeletonDayGroup cardCount={count} />
-            {i < GROUPS.length - 1 && <div className={styles.separator} />}
+            {i < SKELETON_GROUPS.length - 1 && <div className={styles.separator} />}
           </div>
         ))}
       </div>
