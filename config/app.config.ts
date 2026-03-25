@@ -1,0 +1,1 @@
+export const WEEK_CARD_NAME_MAX_LENGTH = 7;

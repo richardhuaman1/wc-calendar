@@ -12,7 +12,13 @@ import {
 } from "date-fns";
 import { es } from "date-fns/locale";
 
-export const PROJECT_TODAY = new Date("2026-06-12T14:00:00");
+/**
+ * Simulated "now" for development (local time, no UTC suffix).
+ * Without "Z", the Date is created in the browser's local timezone,
+ * which matches how date-fns operates by default.
+ * In production, this would be replaced by `new Date()`.
+ */
+export const PROJECT_TODAY = new Date("2026-06-11T14:00:00");
 
 function toDate(value: string | Date): Date {
   return typeof value === "string" ? parseISO(value) : value;
