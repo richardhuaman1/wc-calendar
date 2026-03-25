@@ -35,11 +35,13 @@ export function useSwipe({ total, sliderRef }: UseSwipeOptions): UseSwipeReturn 
   const [dragOffset, setDragOffset] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const touchStartX = useRef(0);
+  const [sliderWidth, setSliderWidth] = useState(FALLBACK_WIDTH);
 
   const lastIdx = Math.max(0, total - 1);
 
   function onTouchStart(e: React.TouchEvent) {
     touchStartX.current = e.touches[0].clientX;
+    setSliderWidth(sliderRef.current?.clientWidth || FALLBACK_WIDTH);
     setIsDragging(true);
   }
 
@@ -70,7 +72,7 @@ export function useSwipe({ total, sliderRef }: UseSwipeOptions): UseSwipeReturn 
   const slideTranslateX = -(activeIndex * 100);
   const dragPercent =
     total > 0 && isDragging
-      ? (dragOffset / (sliderRef.current?.clientWidth || FALLBACK_WIDTH)) * 100
+      ? (dragOffset / sliderWidth) * 100
       : 0;
 
   return {
