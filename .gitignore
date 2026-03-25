@@ -26,6 +26,7 @@
 PLAN.md
 RULES.md
 .claude
+api-response.json
 
 # debug
 npm-debug.log*

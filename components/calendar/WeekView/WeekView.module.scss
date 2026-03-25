@@ -169,83 +169,28 @@ $_grid-columns: $week-time-label-width repeat(7, 1fr);
   border-top: 1px dashed rgba(255, 0, 0, 0.6);
 }
 
-// ── Week event card ─────────────────────────────────────────
-.eventCard {
+// ── Event positioning wrapper ────────────────────────────────
+// This wrapper handles ONLY position in the time grid.
+// Visual styling lives in WeekEventCard.module.scss.
+// Figma: flex-direction: row, gap: 1px for simultaneous events.
+.eventSlot {
   position: absolute;
-  left: 1px;
-  right: 1px;
-  background: $color-surface;
-  border: 1px solid $week-grid-border;
-  border-left: 3px solid $color-primary;
-  border-radius: $radius-sm;
-  padding: 2px $spacing-xs;
-  overflow: hidden;
-  cursor: pointer;
+  left: 0;
+  right: 0;
   z-index: 1;
   display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.eventTeamRow {
-  display: flex;
+  flex-direction: row;
   align-items: center;
-  gap: 2px;
+  gap: 1px;
 }
 
-.eventFlag {
-  width: 12px !important;
-  height: 9px !important;
-  border-radius: 1px;
-  flex-shrink: 0;
+.eventCard {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  cursor: pointer;
 }
 
-.eventTeamCode {
-  font-size: $font-size-3xs;
-  font-weight: $font-weight-medium;
-  color: $color-text;
-  line-height: 1.1;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.eventScore {
-  font-size: $font-size-3xs;
-  font-weight: $font-weight-bold;
-  color: $color-text;
-  margin-left: auto;
-}
-
-.eventSeparator {
-  font-size: $font-size-3xs;
-  color: $color-text-muted;
-  text-align: center;
-  line-height: 1;
-}
-
-.eventGroup {
-  font-size: 7px;
-  color: $color-text-muted;
-  line-height: 1;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.eventBadge {
-  position: absolute;
-  bottom: 2px;
-  right: 2px;
-  width: 14px;
-  height: 14px;
-  border-radius: $radius-full;
-  background: $color-primary;
-  color: $color-surface;
-  font-size: 7px;
-  font-weight: $font-weight-bold;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  line-height: 1;
+.eventCardTbd {
+  cursor: default;
 }
