@@ -18,6 +18,7 @@ export default function Home() {
   const [activeView, setActiveView] = useState<ViewType>("agenda");
   const [currentMonth, setCurrentMonth] = useState(getMonthName(PROJECT_TODAY));
   const agendaRef = useRef<AgendaViewHandle>(null);
+  const scrollAreaRef = useRef<HTMLDivElement>(null);
 
   const { events, status } = useEvents();
 
@@ -32,13 +33,14 @@ export default function Home() {
             onTodayClick={() => agendaRef.current?.scrollToToday()}
           />
         </div>
-        <div className={styles.scrollArea}>
+        <div ref={scrollAreaRef} className={styles.scrollArea}>
           {status === "loading" && <AgendaSkeleton />}
           {status === "succeeded" && activeView === "agenda" && (
             <AgendaView
               ref={agendaRef}
               events={events}
               onMonthChange={setCurrentMonth}
+              scrollContainerRef={scrollAreaRef}
             />
           )}
           {status === "failed" && (

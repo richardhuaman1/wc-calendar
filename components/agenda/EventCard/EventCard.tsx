@@ -82,6 +82,7 @@ export default function EventCard({
   const [dragOffset, setDragOffset] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const touchStartX = useRef(0);
+  const sliderRef = useRef<HTMLDivElement>(null);
 
   const homeName = event.participants.find((p) => p.role === "Home")?.name ?? TBD;
   const awayName = event.participants.find((p) => p.role === "Away")?.name ?? TBD;
@@ -125,7 +126,7 @@ export default function EventCard({
   const translateX = -(activeMarketIdx * 100);
   const dragPercent =
     hasMarkets && isDragging
-      ? (dragOffset / (document?.documentElement?.clientWidth || 375)) * 100
+      ? (dragOffset / (sliderRef.current?.clientWidth || 375)) * 100
       : 0;
 
   // ── Static card (TBD teams — no accordion) ─────────────────
@@ -195,6 +196,7 @@ export default function EventCard({
           {hasMarkets && (
             <>
               <div
+                ref={sliderRef}
                 className={styles.marketSlider}
                 onTouchStart={handleTouchStart}
                 onTouchMove={handleTouchMove}

@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  type RefObject,
   forwardRef,
   useEffect,
   useImperativeHandle,
@@ -21,10 +22,11 @@ export interface AgendaViewHandle {
 interface AgendaViewProps {
   events: CalendarEvent[];
   onMonthChange?: (month: string) => void;
+  scrollContainerRef?: RefObject<HTMLDivElement | null>;
 }
 
 const AgendaView = forwardRef<AgendaViewHandle, AgendaViewProps>(
-  function AgendaView({ events, onMonthChange }, ref) {
+  function AgendaView({ events, onMonthChange, scrollContainerRef }, ref) {
     const { isSelected, toggle } = useBetslip();
 
     const dayGroups = useMemo<DayGroupType[]>(() => {
@@ -105,6 +107,8 @@ const AgendaView = forwardRef<AgendaViewHandle, AgendaViewProps>(
     useEffect(() => {
       if (!onMonthChange) return;
 
+      const scrollRoot = scrollContainerRef?.current ?? null;
+
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
@@ -118,12 +122,12 @@ const AgendaView = forwardRef<AgendaViewHandle, AgendaViewProps>(
           );
           if (topGroup) onMonthChange(getMonthName(topGroup.date));
         },
-        { threshold: 0, rootMargin: "0px 0px -50% 0px" }
+        { root: scrollRoot, threshold: 0, rootMargin: "0px 0px -50% 0px" }
       );
 
       dayGroupRefs.current.forEach((el) => observer.observe(el));
       return () => observer.disconnect();
-    }, [dayGroups, onMonthChange]);
+    }, [dayGroups, onMonthChange, scrollContainerRef]);
 
     return (
       <div className={styles.container}>
