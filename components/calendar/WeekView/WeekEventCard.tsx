@@ -1,54 +1,120 @@
-import { CalendarEvent } from "@/types/event";
-import { VENUE_ROLE_HOME, VENUE_ROLE_AWAY, TEAM_SEPARATOR } from "@/utils/constants";
-import { getHour, getMinute } from "@/utils/date";
-import { WEEK_ROW_HEIGHT, WEEK_EVENT_DURATION_ROWS } from "@/utils/constants";
-import styles from "./WeekView.module.scss";
+import { CalendarEvent, EventParticipant } from "@/types/event";
+import { TBD, VENUE_ROLE_HOME, VENUE_ROLE_AWAY, TEAM_SEPARATOR } from "@/utils/constants";
+import { truncateName } from "@/utils/format";
+import GlobeIcon from "@/components/shared/icons/GlobeIcon";
+import styles from "./WeekEventCard.module.scss";
 
-interface WeekEventCardProps {
-  event: CalendarEvent;
+// ── Sub-component: live indicator (pulsing dot) ─────────────
+function LiveIndicator() {
+  return (
+    <div className={styles.liveIndicator}>
+      <div className={styles.liveDot}>
+        <div className={styles.liveDotPulse} />
+        <div className={styles.liveDotCore} />
+      </div>
+    </div>
+  );
 }
 
-export default function WeekEventCard({ event }: WeekEventCardProps) {
-  const home = event.participants.find((p) => p.role === VENUE_ROLE_HOME);
-  const away = event.participants.find((p) => p.role === VENUE_ROLE_AWAY);
+// ── Sub-component: participant row (flag + name) ────────────
+interface ParticipantRowProps {
+  participant: EventParticipant;
+  compact?: boolean;
+}
 
-  const hour = getHour(event.startDate);
-  const minute = getMinute(event.startDate);
-  // 2 half-hour rows per hour, so multiply by 2
-  const halfHourRows = hour * 2 + minute / 30;
-  const topPx = halfHourRows * WEEK_ROW_HEIGHT;
-  const heightPx = WEEK_EVENT_DURATION_ROWS * WEEK_ROW_HEIGHT;
+function ParticipantRow({ participant, compact = false }: ParticipantRowProps) {
+  const isTbd = participant.name === TBD;
+
+  const displayName = isTbd
+    ? TBD
+    : compact
+      ? participant.countryCode.toUpperCase()
+      : truncateName(participant.name);
 
   return (
-    <div
-      className={styles.eventCard}
-      style={{ top: `${topPx}px`, height: `${heightPx}px` }}
-    >
-      {home && (
-        <div className={styles.eventTeamRow}>
-          <span className={`fi fi-${home.countryCode.toLowerCase()} ${styles.eventFlag}`} />
-          <span className={styles.eventTeamCode}>{home.name}</span>
-          {home.score !== undefined && (
-            <span className={styles.eventScore}>{home.score}</span>
-          )}
-        </div>
+    <div className={styles.participant}>
+      {isTbd ? (
+        <span className={styles.globeWrapper}>
+          <GlobeIcon size={10} color="#A4A4A4" />
+        </span>
+      ) : (
+        <span
+          className={`fi fi-${participant.countryCode.toLowerCase()} fis ${styles.flag}`}
+        />
       )}
+      <span className={`${styles.teamName} ${isTbd ? styles.teamNameTbd : ""}`}>
+        {displayName}
+      </span>
+    </div>
+  );
+}
 
-      <span className={styles.eventSeparator}>{TEAM_SEPARATOR}</span>
+// ── Sub-component: score / vs section ───────────────────────
+interface ResultSectionProps {
+  home: EventParticipant | undefined;
+  away: EventParticipant | undefined;
+  isLive: boolean;
+}
 
-      {away && (
-        <div className={styles.eventTeamRow}>
-          <span className={`fi fi-${away.countryCode.toLowerCase()} ${styles.eventFlag}`} />
-          <span className={styles.eventTeamCode}>{away.name}</span>
-          {away.score !== undefined && (
-            <span className={styles.eventScore}>{away.score}</span>
-          )}
-        </div>
+function ResultSection({ home, away, isLive }: ResultSectionProps) {
+  return (
+    <div className={`${styles.result} ${isLive ? styles.resultLive : ""}`}>
+      {isLive && home?.score !== undefined && (
+        <span className={styles.score}>{home.score}</span>
       )}
+      <span className={styles.separator}>{TEAM_SEPARATOR}</span>
+      {isLive && away?.score !== undefined && (
+        <span className={styles.score}>{away.score}</span>
+      )}
+    </div>
+  );
+}
 
-      <span className={styles.eventGroup}>{event.groupName}</span>
+// ── Sub-component: phase badge (Grupo D, 16vos, etc.) ───────
+interface PhaseBadgeProps {
+  groupName: string;
+}
 
-      <span className={styles.eventBadge}>D</span>
+function PhaseBadge({ groupName }: PhaseBadgeProps) {
+  const parts = groupName.split(" ");
+  const label = parts.length > 1 ? parts.slice(0, -1).join(" ") : "";
+  const badge = parts[parts.length - 1];
+
+  return (
+    <div className={styles.phase}>
+      {label && <span className={styles.phaseLabel}>{label}</span>}
+      <div className={styles.badgeWrapper}>
+        <span className={styles.badge}>{badge}</span>
+      </div>
+    </div>
+  );
+}
+
+// ── Main component ──────────────────────────────────────────
+export interface WeekEventCardProps {
+  event: CalendarEvent;
+  /** When true, card is rendered in compact mode (side-by-side with another) */
+  compact?: boolean;
+}
+
+export default function WeekEventCard({ event, compact = false }: WeekEventCardProps) {
+  const home = event.participants.find((p) => p.role === VENUE_ROLE_HOME);
+  const away = event.participants.find((p) => p.role === VENUE_ROLE_AWAY);
+  const isLive = home?.score !== undefined && away?.score !== undefined;
+
+  const cardClass = `${styles.card} ${compact ? styles.cardCompact : ""}`;
+
+  return (
+    <div className={cardClass}>
+      <div className={styles.content}>
+        {isLive && <LiveIndicator />}
+        <div className={styles.teamsAndResult}>
+          {home && <ParticipantRow participant={home} compact={compact} />}
+          <ResultSection home={home} away={away} isLive={isLive} />
+          {away && <ParticipantRow participant={away} compact={compact} />}
+        </div>
+        <PhaseBadge groupName={event.groupName} />
+      </div>
     </div>
   );
 }

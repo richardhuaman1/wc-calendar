@@ -1,0 +1,225 @@
+@use '../../../styles/variables' as *;
+
+// ── Card outer container ────────────────────────────────────
+// Figma: 46.43px × 128px, border 1px #DADADA, radius 6px
+.card {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background: $color-surface;
+  border: 1px solid #DADADA;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+// Compact variant: used when 2 events share the same slot
+.cardCompact {
+  border-color: #5E5E5E;
+}
+
+// ── Inner content frame ─────────────────────────────────────
+// Figma: 44.43px × 126px (card minus borders)
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-self: stretch;
+  flex: 1;
+  min-height: 0;
+}
+
+// ── Live indicator (pulsing dot) ────────────────────────────
+// Figma: 12px × 19px (padding 4px top, 3px bottom)
+.liveIndicator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4px 0 3px;
+  height: 19px;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+.liveDot {
+  position: relative;
+  width: 12px;
+  height: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.liveDotCore {
+  width: 6px;
+  height: 6px;
+  background: #FF0000;
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.liveDotPulse {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 0, 0, 0.15);
+  border-radius: 50%;
+  animation: radar 1.5s ease-out infinite;
+}
+
+@keyframes radar {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  70% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+
+// ── Teams and result wrapper ────────────────────────────────
+// Figma: 86px height when live (flex: 1 fills remaining), gap 6px
+.teamsAndResult {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-self: stretch;
+  flex: 1;
+  min-height: 0;
+  gap: 6px;
+}
+
+// ── Participant row (flag + name) ───────────────────────────
+// Figma: ~20px height (flag 10px + gap 2px + name ~12px)
+.participant {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-self: stretch;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.flag {
+  width: 10px !important;
+  height: 10px !important;
+  border-radius: 100px;
+  border: 0.5px solid #F1F1F1;
+  flex-shrink: 0;
+  object-fit: cover;
+}
+
+.teamName {
+  font-size: 9px;
+  font-weight: $font-weight-regular;
+  line-height: 12px;
+  color: #000000;
+  text-align: center;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// TBD teams: no truncation
+.teamNameTbd {
+  overflow: visible;
+  text-overflow: clip;
+}
+
+.globeWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 10px;
+  height: 10px;
+  flex-shrink: 0;
+}
+
+// ── Result section (score / vs) ─────────────────────────────
+// Figma without scores: just "vs" (auto height)
+// Figma with scores: 34px (score 10 + gap 2 + vs 10 + gap 2 + score 10)
+.result {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-self: stretch;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.resultLive {
+  height: 34px;
+}
+
+.score {
+  font-size: 10px;
+  font-weight: $font-weight-regular;
+  line-height: 10px;
+  color: #000000;
+  text-align: center;
+}
+
+.separator {
+  font-size: 8px;
+  font-weight: $font-weight-medium;
+  line-height: 10px;
+  color: #000000;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+// ── Phase badge (Grupo + D) ─────────────────────────────────
+// Figma: 21px height (live), flex-end, padding-bottom 2px
+.phase {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  align-self: stretch;
+  height: 21px;
+  padding: 0 0 2px;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+.phaseLabel {
+  font-size: 7px;
+  font-weight: $font-weight-regular;
+  line-height: 10px;
+  color: #818181;
+  text-align: center;
+}
+
+.badgeWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-self: stretch;
+  padding: 0 2px;
+}
+
+.badge {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  height: 10px;
+  background: #F1F1F1;
+  border-radius: 3px;
+  font-size: 8px;
+  font-weight: $font-weight-medium;
+  line-height: 10px;
+  color: #818181;
+  text-align: center;
+}
