@@ -8,7 +8,7 @@ import styles from "./DayGroup.module.scss";
 interface DayGroupProps {
   date: Date;
   events: CalendarEvent[];
-  expandedEventId: string | null;
+  expandedEventIds: Set<string>;
   onExpand: (id: string) => void;
   onOddsToggle: (odd: OddsOption, eventId: string, eventName: string) => void;
   isOddSelected: (oddId: string) => boolean;
@@ -17,7 +17,7 @@ interface DayGroupProps {
 export default function DayGroup({
   date,
   events,
-  expandedEventId,
+  expandedEventIds,
   onExpand,
   onOddsToggle,
   isOddSelected,
@@ -40,7 +40,7 @@ export default function DayGroup({
           <EventCard
             key={event.id}
             event={event}
-            isExpanded={expandedEventId === event.id}
+            isExpanded={expandedEventIds.has(event.id)}
             onExpand={() => onExpand(event.id)}
             onOddsToggle={onOddsToggle}
             isOddSelected={isOddSelected}
