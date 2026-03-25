@@ -103,20 +103,22 @@ const WeekView = forwardRef<WeekViewHandle, WeekViewProps>(
     );
 
     return (
-      <div
-        className={styles.container}
-        onTouchStart={handlers.onTouchStart}
-        onTouchMove={handlers.onTouchMove}
-        onTouchEnd={handlers.onTouchEnd}
-      >
-        <WeekHeader weekDays={weekDays} />
-        <TimeGrid
-          weekDays={weekDays}
-          eventsByDay={eventsByDay}
-          dragOffset={dragOffset}
-          isDragging={isDragging}
-          onEventClick={handleEventClick}
-        />
+      <>
+        <div
+          className={styles.container}
+          onTouchStart={handlers.onTouchStart}
+          onTouchMove={handlers.onTouchMove}
+          onTouchEnd={handlers.onTouchEnd}
+        >
+          <WeekHeader weekDays={weekDays} />
+          <TimeGrid
+            weekDays={weekDays}
+            eventsByDay={eventsByDay}
+            dragOffset={dragOffset}
+            isDragging={isDragging}
+            onEventClick={handleEventClick}
+          />
+        </div>
 
         {popup && (
           <EventPopup
@@ -127,7 +129,7 @@ const WeekView = forwardRef<WeekViewHandle, WeekViewProps>(
             isSelected={isSelected}
           />
         )}
-      </div>
+      </>
     );
   }
 );

@@ -29,6 +29,7 @@ export default function EventPopup({
   isSelected,
 }: EventPopupProps) {
   const popupRef = useRef<HTMLDivElement>(null);
+  const pointerDownTargetRef = useRef<EventTarget | null>(null);
 
   // Position the popup synchronously before paint
   useLayoutEffect(() => {
@@ -63,10 +64,21 @@ export default function EventPopup({
     popup.style.transformOrigin = showBelow ? "top center" : "bottom center";
   }, [anchorRect]);
 
-  // Close on outside click
-  const handleBackdropClick = useCallback(
-    (e: React.MouseEvent) => {
-      if (e.target === e.currentTarget) onClose();
+  // Close on outside click — only if pointer down AND up both hit the backdrop
+  // This prevents accidental close when swiping the MarketSlider
+  const handlePointerDown = useCallback((e: React.PointerEvent) => {
+    pointerDownTargetRef.current = e.target;
+  }, []);
+
+  const handlePointerUp = useCallback(
+    (e: React.PointerEvent) => {
+      if (
+        e.target === e.currentTarget &&
+        pointerDownTargetRef.current === e.currentTarget
+      ) {
+        onClose();
+      }
+      pointerDownTargetRef.current = null;
     },
     [onClose]
   );
@@ -81,8 +93,19 @@ export default function EventPopup({
   }, [onClose]);
 
   return (
-    <div className={styles.backdrop} onClick={handleBackdropClick}>
-      <div ref={popupRef} className={styles.popup}>
+    <div
+      className={styles.backdrop}
+      onPointerDown={handlePointerDown}
+      onPointerUp={handlePointerUp}
+      onTouchStart={(e) => e.stopPropagation()}
+      onTouchMove={(e) => e.stopPropagation()}
+    >
+      <div
+        ref={popupRef}
+        className={styles.popup}
+        onTouchStart={(e) => e.stopPropagation()}
+        onTouchMove={(e) => e.stopPropagation()}
+      >
         <button className={styles.closeBtn} onClick={onClose} aria-label="Cerrar">
           ✕
         </button>
