@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useLayoutEffect, useRef } from "react";
 import { CalendarEvent, IsSelectedFn, OddsToggleFn } from "@/types/event";
 import EventContent from "@/components/calendar/EventCard/EventContent";
+import CloseIcon from "@/components/shared/icons/CloseIcon";
 import styles from "./EventPopup.module.scss";
 
 interface EventPopupProps {
@@ -107,7 +108,7 @@ export default function EventPopup({
         onTouchMove={(e) => e.stopPropagation()}
       >
         <button className={styles.closeBtn} onClick={onClose} aria-label="Cerrar">
-          ✕
+          <CloseIcon />
         </button>
         <EventContent
           event={event}
