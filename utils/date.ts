@@ -1,17 +1,30 @@
 export const PROJECT_TODAY = new Date("2026-06-11T00:00:00");
 
-export function isSameDay(a: Date, b: Date): boolean {
+function toDate(value: string | Date): Date {
+  return value instanceof Date ? value : new Date(value);
+}
+
+export function isSameDay(a: string | Date, b: string | Date): boolean {
+  const da = toDate(a);
+  const db = toDate(b);
   return (
-    a.getFullYear() === b.getFullYear() &&
-    a.getMonth() === b.getMonth() &&
-    a.getDate() === b.getDate()
+    da.getFullYear() === db.getFullYear() &&
+    da.getMonth() === db.getMonth() &&
+    da.getDate() === db.getDate()
   );
 }
 
-export function getDayAbbreviation(date: Date): string {
-  return date.toLocaleDateString("es-PE", { weekday: "short" });
+export function getDayAbbreviation(date: string | Date): string {
+  return toDate(date).toLocaleDateString("es-PE", { weekday: "short" });
 }
 
-export function getMonthName(date: Date): string {
-  return date.toLocaleDateString("es-PE", { month: "long" });
+export function getMonthName(date: string | Date): string {
+  return toDate(date).toLocaleDateString("es-PE", { month: "long" });
+}
+
+export function formatEventTime(isoDate: string): string {
+  const date = new Date(isoDate);
+  const hours = date.getHours().toString().padStart(2, "0");
+  const minutes = date.getMinutes().toString().padStart(2, "0");
+  return `${hours}:${minutes}`;
 }
