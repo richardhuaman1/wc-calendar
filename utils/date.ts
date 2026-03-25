@@ -22,7 +22,8 @@ export function getDayAbbreviation(date: string | Date): string {
 }
 
 export function getMonthName(date: string | Date): string {
-  return format(toDate(date), "MMMM", { locale: es });
+  const month = format(toDate(date), "MMMM", { locale: es });
+  return month.charAt(0).toUpperCase() + month.slice(1);
 }
 
 export function formatEventTime(isoDate: string): string {
