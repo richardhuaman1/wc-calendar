@@ -9,6 +9,7 @@ import MonthIndicator from "@/components/layout/MonthIndicator/MonthIndicator";
 import AgendaView, {
   AgendaViewHandle,
 } from "@/components/calendar/AgendaView/AgendaView";
+import WeekView, { WeekViewHandle } from "@/components/calendar/WeekView/WeekView";
 import BetSlipFAB from "@/components/shared/BetSlipFAB/BetSlipFAB";
 import styles from "./CalendarShell.module.scss";
 
@@ -20,6 +21,7 @@ export default function CalendarShell({ events }: CalendarShellProps) {
   const [activeView, setActiveView] = useState<ViewType>("agenda");
   const [currentMonth, setCurrentMonth] = useState(getMonthName(PROJECT_TODAY));
   const agendaRef = useRef<AgendaViewHandle>(null);
+  const weekRef = useRef<WeekViewHandle>(null);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
 
   return (
@@ -29,7 +31,10 @@ export default function CalendarShell({ events }: CalendarShellProps) {
           <ViewTabs activeView={activeView} onViewChange={setActiveView} />
           <MonthIndicator
             month={currentMonth}
-            onTodayClick={() => agendaRef.current?.scrollToToday()}
+            onTodayClick={() => {
+              agendaRef.current?.scrollToToday();
+              weekRef.current?.scrollToToday();
+            }}
           />
         </div>
         <div ref={scrollAreaRef} className={styles.scrollArea}>
@@ -39,6 +44,13 @@ export default function CalendarShell({ events }: CalendarShellProps) {
               events={events}
               onMonthChange={setCurrentMonth}
               scrollContainerRef={scrollAreaRef}
+            />
+          )}
+          {activeView === "semana" && (
+            <WeekView
+              ref={weekRef}
+              events={events}
+              onMonthChange={setCurrentMonth}
             />
           )}
         </div>

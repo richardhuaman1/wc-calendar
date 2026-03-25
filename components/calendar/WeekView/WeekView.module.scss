@@ -1,0 +1,251 @@
+@use '../../../styles/variables' as *;
+
+// ── Container ───────────────────────────────────────────────
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow-y: auto;
+}
+
+// ── Shared grid columns ─────────────────────────────────────
+// Both header and body MUST use this exact same definition
+// so columns align pixel-perfectly.
+$_grid-columns: $week-time-label-width repeat(7, 1fr);
+
+// ── Day header bar ──────────────────────────────────────────
+.headerBar {
+  display: grid;
+  grid-template-columns: $_grid-columns;
+  flex-shrink: 0;
+  border-bottom: 1px solid $week-grid-border;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: $color-bg;
+}
+
+.headerSpacer {
+  min-width: 0;
+}
+
+.headerDay {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2px 0 4px;
+  gap: 1px;
+  height: 39px;
+  border-left: 1px solid $week-grid-border;
+  min-width: 0;
+}
+
+.headerDayName {
+  font-size: $font-size-2xs;
+  font-weight: $font-weight-medium;
+  line-height: 12px;
+  color: #5E5E5E;
+  text-transform: lowercase;
+}
+
+.headerDayNumber {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20px;
+  height: 20px;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  line-height: 1;
+  color: #5E5E5E;
+  border-radius: $radius-lg;
+}
+
+.headerDayToday {
+  background: $week-today-bg;
+  isolation: isolate;
+
+  .headerDayNumber {
+    background: $color-primary;
+    color: $color-surface;
+  }
+}
+
+// ── Time grid ───────────────────────────────────────────────
+.gridScroll {
+  flex-shrink: 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: $_grid-columns;
+  position: relative;
+}
+
+.timeLabels {
+  min-width: 0;
+  overflow: hidden;
+}
+
+.timeSlot {
+  display: flex;
+  flex-direction: column;
+}
+
+.timeLabel {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: $week-time-label-width;
+  height: $week-row-height;
+}
+
+.timeLabelTime {
+  font-size: $font-size-3xs;
+  font-weight: $font-weight-regular;
+  line-height: 10px;
+  color: $color-text-muted;
+  text-align: center;
+}
+
+.timeLabelPeriod {
+  font-size: $font-size-3xs;
+  font-weight: $font-weight-regular;
+  line-height: 10px;
+  color: $color-text-muted;
+  text-align: center;
+}
+
+.column {
+  box-sizing: border-box;
+  position: relative;
+  border-left: 1px solid $week-grid-border;
+  min-width: 0;
+}
+
+.columnToday {
+  background: $week-today-bg;
+}
+
+.hourSlot {
+  display: flex;
+  flex-direction: column;
+}
+
+.halfRow {
+  height: $week-row-height;
+  border-bottom: 1px solid $week-grid-border;
+}
+
+// ── Time indicator (current time) ────────────────────────
+.timeIndicator {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 0;
+  z-index: 3;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+}
+
+.timeIndicatorDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #FF0000;
+  flex-shrink: 0;
+  margin-left: calc(#{$week-time-label-width} - 3px);
+}
+
+.timeIndicatorLine {
+  flex: 1;
+  height: 0;
+  border-top: 1px dashed rgba(255, 0, 0, 0.6);
+}
+
+// ── Week event card ─────────────────────────────────────────
+.eventCard {
+  position: absolute;
+  left: 1px;
+  right: 1px;
+  background: $color-surface;
+  border: 1px solid $week-grid-border;
+  border-left: 3px solid $color-primary;
+  border-radius: $radius-sm;
+  padding: 2px $spacing-xs;
+  overflow: hidden;
+  cursor: pointer;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.eventTeamRow {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.eventFlag {
+  width: 12px !important;
+  height: 9px !important;
+  border-radius: 1px;
+  flex-shrink: 0;
+}
+
+.eventTeamCode {
+  font-size: $font-size-3xs;
+  font-weight: $font-weight-medium;
+  color: $color-text;
+  line-height: 1.1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.eventScore {
+  font-size: $font-size-3xs;
+  font-weight: $font-weight-bold;
+  color: $color-text;
+  margin-left: auto;
+}
+
+.eventSeparator {
+  font-size: $font-size-3xs;
+  color: $color-text-muted;
+  text-align: center;
+  line-height: 1;
+}
+
+.eventGroup {
+  font-size: 7px;
+  color: $color-text-muted;
+  line-height: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.eventBadge {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 14px;
+  height: 14px;
+  border-radius: $radius-full;
+  background: $color-primary;
+  color: $color-surface;
+  font-size: 7px;
+  font-weight: $font-weight-bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
