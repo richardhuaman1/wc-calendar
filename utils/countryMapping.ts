@@ -1,3 +1,5 @@
+import { GROUP_STAGE_FALLBACK } from "./constants";
+
 const TEAM_COUNTRY_CODE: Record<string, string> = {
   "México": "mx",
   "Sudáfrica": "za",
@@ -101,5 +103,5 @@ export function getCountryCode(teamName: string): string {
 }
 
 export function getGroupName(homeTeam: string, awayTeam: string): string {
-  return TEAM_GROUP[homeTeam] ?? TEAM_GROUP[awayTeam] ?? "Fase de grupos";
+  return TEAM_GROUP[homeTeam] ?? TEAM_GROUP[awayTeam] ?? GROUP_STAGE_FALLBACK;
 }

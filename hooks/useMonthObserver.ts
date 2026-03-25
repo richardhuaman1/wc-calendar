@@ -1,0 +1,50 @@
+import { type RefObject, useEffect, useRef } from "react";
+import { DayGroup } from "@/types/event";
+import { getMonthName } from "@/utils/date";
+import {
+  DATA_ATTR_DATE_KEY,
+  MONTH_OBSERVER_ROOT_MARGIN,
+  MONTH_OBSERVER_THRESHOLD,
+} from "@/utils/constants";
+
+/**
+ * Observes which day-group sections are visible inside a scroll container
+ * and calls `onMonthChange` with the name of the topmost visible month.
+ */
+export function useMonthObserver(
+  dayGroups: DayGroup[],
+  dayGroupRefs: RefObject<Map<string, HTMLDivElement>>,
+  onMonthChange: ((month: string) => void) | undefined,
+  scrollContainerRef?: RefObject<HTMLDivElement | null>
+) {
+  const visibleDateKeys = useRef<Set<string>>(new Set());
+
+  useEffect(() => {
+    if (!onMonthChange) return;
+
+    const scrollRoot = scrollContainerRef?.current ?? null;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const key = entry.target.getAttribute(DATA_ATTR_DATE_KEY) ?? "";
+          if (entry.isIntersecting) visibleDateKeys.current.add(key);
+          else visibleDateKeys.current.delete(key);
+        });
+
+        const topGroup = dayGroups.find((g) =>
+          visibleDateKeys.current.has(g.date.toDateString())
+        );
+        if (topGroup) onMonthChange(getMonthName(topGroup.date));
+      },
+      {
+        root: scrollRoot,
+        threshold: MONTH_OBSERVER_THRESHOLD,
+        rootMargin: MONTH_OBSERVER_ROOT_MARGIN,
+      }
+    );
+
+    dayGroupRefs.current.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, [dayGroups, onMonthChange, scrollContainerRef, dayGroupRefs]);
+}

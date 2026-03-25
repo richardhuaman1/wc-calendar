@@ -1,3 +1,5 @@
+import { APP_LOCALE } from "./constants";
+
 export const PROJECT_TODAY = new Date("2026-06-11T00:00:00");
 
 function toDate(value: string | Date): Date {
@@ -15,11 +17,11 @@ export function isSameDay(a: string | Date, b: string | Date): boolean {
 }
 
 export function getDayAbbreviation(date: string | Date): string {
-  return toDate(date).toLocaleDateString("es-PE", { weekday: "short" });
+  return toDate(date).toLocaleDateString(APP_LOCALE, { weekday: "short" });
 }
 
 export function getMonthName(date: string | Date): string {
-  return toDate(date).toLocaleDateString("es-PE", { month: "long" });
+  return toDate(date).toLocaleDateString(APP_LOCALE, { month: "long" });
 }
 
 export function formatEventTime(isoDate: string): string {
