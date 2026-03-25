@@ -25,6 +25,7 @@
 *.pem
 PLAN.md
 RULES.md
+.claude
 
 # debug
 npm-debug.log*
