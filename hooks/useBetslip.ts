@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { OddsOption } from "@/types/event";
+import { Selection } from "@/types/event";
 import { selectSelections, toggleSelection } from "@/store/betslipSlice";
 import { useAppDispatch } from "./useAppDispatch";
 import { useAppSelector } from "./useAppSelector";
@@ -8,25 +8,31 @@ export function useBetslip() {
   const dispatch = useAppDispatch();
   const selections = useAppSelector(selectSelections);
 
-  const isOddSelected = useCallback(
-    (oddId: string) => selections.some((s) => s.id === oddId),
+  const isSelected = useCallback(
+    (selectionId: string) => selections.some((s) => s.id === selectionId),
     [selections]
   );
 
-  const toggleOdd = useCallback(
-    (odd: OddsOption, eventId: string, eventName: string) => {
+  const toggle = useCallback(
+    (
+      selection: Selection,
+      eventId: string,
+      eventName: string,
+      marketName: string
+    ) => {
       dispatch(
         toggleSelection({
-          id: odd.id,
+          id: selection.id,
           eventId,
           eventName,
-          outcomeName: odd.label,
-          odds: odd.value,
+          marketName,
+          outcomeName: selection.name,
+          odds: selection.odds,
         })
       );
     },
     [dispatch]
   );
 
-  return { isOddSelected, toggleOdd };
+  return { selections, isSelected, toggle };
 }

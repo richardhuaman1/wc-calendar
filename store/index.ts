@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import betslipReducer from "./betslipSlice";
+import eventsReducer from "./eventsSlice";
 
 export const store = configureStore({
   reducer: {
     betslip: betslipReducer,
+    events: eventsReducer,
   },
 });
 
