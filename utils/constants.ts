@@ -44,3 +44,9 @@ export const MONTH_OBSERVER_THRESHOLD = 0;
 
 // ── UI: Skeleton config ────────────────────────────────────
 export const SKELETON_GROUPS = [3, 3, 3];
+
+// ── UI: WeekView config ─────────────────────────────────────
+export const WEEK_HOURS = Array.from({ length: 24 }, (_, i) => i);
+export const WEEK_ROW_HEIGHT = 32;
+export const WEEK_TIME_LABEL_WIDTH = 28;
+export const WEEK_EVENT_DURATION_ROWS = 4;
