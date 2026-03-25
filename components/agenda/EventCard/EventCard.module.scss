@@ -271,6 +271,32 @@
   text-align: right;
 }
 
+// ── Market slider (touch swipe) ─────────────────────────────
+
+.marketSlider {
+  overflow: hidden;
+  width: 100%;
+  touch-action: pan-y;
+}
+
+.marketTrack {
+  display: flex;
+  transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+.marketTrackDragging {
+  transition: none;
+}
+
+.marketSlide {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+  min-width: 100%;
+  flex-shrink: 0;
+}
+
 .marketRow {
   display: flex;
   flex-direction: row;
@@ -284,6 +310,16 @@
   font-size: $font-size-2xs;
   color: $color-tab-inactive;
   text-align: center;
+}
+
+.superCuotaBadge {
+  font-size: $font-size-3xs;
+  font-weight: $font-weight-bold;
+  color: $color-surface;
+  background: $color-cta;
+  border-radius: $radius-sm;
+  padding: 1px $spacing-xs;
+  line-height: 12px;
 }
 
 // ── Odds ────────────────────────────────────────────────────
@@ -317,6 +353,9 @@
   height: 6px;
   border-radius: $radius-full;
   background: $color-border;
+  padding: 0;
+  border: none;
+  cursor: pointer;
 }
 
 .dotActive {
