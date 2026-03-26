@@ -98,8 +98,69 @@ const TEAM_GROUP: Record<string, string> = {
   "Colombia": "Grupo K",
 };
 
+// FIFA 3-letter short codes for compact display (WeekView simultaneous events)
+const TEAM_SHORT_CODE: Record<string, string> = {
+  "México": "MEX",
+  "Sudáfrica": "RSA",
+  "EE.UU.": "USA",
+  "Paraguay": "PAR",
+  "Catar": "QAT",
+  "Suiza": "SUI",
+  "Brasil": "BRA",
+  "Marruecos": "MAR",
+  "Haití": "HAI",
+  "Escocia": "SCO",
+  "Alemania": "GER",
+  "Curazao": "CUW",
+  "Países Bajos": "NED",
+  "Japón": "JPN",
+  "Costa de Marfil": "CIV",
+  "Ecuador": "ECU",
+  "España": "ESP",
+  "Cabo Verde": "CPV",
+  "Bélgica": "BEL",
+  "Egipto": "EGY",
+  "Arabia Saudita": "KSA",
+  "Uruguay": "URU",
+  "Irán": "IRN",
+  "Nueva Zelanda": "NZL",
+  "Francia": "FRA",
+  "Senegal": "SEN",
+  "Argentina": "ARG",
+  "Argelia": "ALG",
+  "Austria": "AUT",
+  "Jordania": "JOR",
+  "Inglaterra": "ENG",
+  "Croacia": "CRO",
+  "Ghana": "GHA",
+  "Panamá": "PAN",
+  "Uzbekistán": "UZB",
+  "Colombia": "COL",
+  "Canadá": "CAN",
+  "Corea del Sur": "KOR",
+  "Australia": "AUS",
+  "República de Corea": "KOR",
+  "Gales": "WAL",
+  "Portugal": "POR",
+  "Italia": "ITA",
+  "Chile": "CHI",
+  "Perú": "PER",
+  "Camerún": "CMR",
+  "Nigeria": "NGA",
+  "Túnez": "TUN",
+  "Serbia": "SRB",
+  "Dinamarca": "DEN",
+  "Suecia": "SWE",
+  "Polonia": "POL",
+  "Noruega": "NOR",
+};
+
 export function getCountryCode(teamName: string): string {
   return TEAM_COUNTRY_CODE[teamName] ?? "";
+}
+
+export function getShortCode(teamName: string): string {
+  return TEAM_SHORT_CODE[teamName] ?? "";
 }
 
 export function getGroupName(homeTeam: string, awayTeam: string): string {

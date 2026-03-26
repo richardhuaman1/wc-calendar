@@ -19,6 +19,7 @@ export interface EventParticipant {
   id: string;
   name: string;
   countryCode: string;
+  shortCode: string;
   role: "Home" | "Away";
   score?: number;
   isSponsored?: boolean;

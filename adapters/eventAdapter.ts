@@ -1,6 +1,6 @@
 import { ApiEvent, ApiMarket, ApiSelection } from "@/types/api";
 import { CalendarEvent, EventParticipant, Market, Selection } from "@/types/event";
-import { getCountryCode, getGroupName } from "@/utils/countryMapping";
+import { getCountryCode, getShortCode, getGroupName } from "@/utils/countryMapping";
 import { formatEventTime } from "@/utils/date";
 import { parseScore } from "@/utils/parseScore";
 import {
@@ -70,6 +70,7 @@ function adaptParticipant(
     id: raw._id,
     name: raw.Name,
     countryCode: getCountryCode(raw.Name),
+    shortCode: getShortCode(raw.Name),
     role: raw.VenueRole,
     score: parseScore(rawScore),
   };
