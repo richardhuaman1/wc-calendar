@@ -1,0 +1,187 @@
+@use 'variables' as *;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow-y: auto;
+}
+
+// Both header and body must share this definition so columns align.
+$_grid-columns: $week-time-label-width repeat(var(--day-count, 7), 1fr);
+
+.headerBar {
+  display: grid;
+  grid-template-columns: $_grid-columns;
+  flex-shrink: 0;
+  border-bottom: 1px solid $week-grid-border;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: $color-bg;
+}
+
+.headerSpacer {
+  min-width: 0;
+}
+
+.headerDay {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2px 0 4px;
+  gap: 1px;
+  height: 39px;
+  border-left: 1px solid $week-grid-border;
+  min-width: 0;
+}
+
+.headerDayName {
+  font-size: $font-size-2xs;
+  font-weight: $font-weight-medium;
+  line-height: 12px;
+  color: #5E5E5E;
+  text-transform: lowercase;
+}
+
+.headerDayNumber {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20px;
+  height: 20px;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  line-height: 1;
+  color: #5E5E5E;
+  border-radius: $radius-lg;
+}
+
+.headerDayToday {
+  background: $week-today-bg;
+  isolation: isolate;
+
+  .headerDayNumber {
+    background: $color-primary;
+    color: $color-surface;
+  }
+}
+
+.gridScroll {
+  flex-shrink: 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: $_grid-columns;
+  position: relative;
+}
+
+.timeLabels {
+  min-width: 0;
+  overflow: hidden;
+}
+
+.timeSlot {
+  display: flex;
+  flex-direction: column;
+}
+
+.timeLabel {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: $week-time-label-width;
+  height: $week-row-height;
+}
+
+.timeLabelTime {
+  font-size: $font-size-3xs;
+  font-weight: $font-weight-regular;
+  line-height: 10px;
+  color: $color-text-muted;
+  text-align: center;
+}
+
+.timeLabelPeriod {
+  font-size: $font-size-3xs;
+  font-weight: $font-weight-regular;
+  line-height: 10px;
+  color: $color-text-muted;
+  text-align: center;
+}
+
+.column {
+  box-sizing: border-box;
+  position: relative;
+  border-left: 1px solid $week-grid-border;
+  min-width: 0;
+}
+
+.columnToday {
+  background: $week-today-bg;
+}
+
+.hourSlot {
+  display: flex;
+  flex-direction: column;
+}
+
+.halfRow {
+  height: $week-row-height;
+  border-bottom: 1px solid $week-grid-border;
+}
+
+.timeIndicator {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 0;
+  z-index: 3;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+}
+
+.timeIndicatorDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #FF0000;
+  flex-shrink: 0;
+  margin-left: calc(#{$week-time-label-width} - 3px);
+}
+
+.timeIndicatorLine {
+  flex: 1;
+  height: 0;
+  border-top: 1px dashed rgba(255, 0, 0, 0.6);
+}
+
+// Position only; visual styling lives in WeekEventCard.module.scss.
+.eventSlot {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1px;
+}
+
+.eventCard {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  cursor: pointer;
+}
+
+.eventCardTbd {
+  cursor: default;
+}
