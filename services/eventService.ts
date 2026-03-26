@@ -24,10 +24,10 @@ async function fetchCalendarEventsFromApi(): Promise<CalendarEvent[]> {
  * returning a single chronologically-sorted list.
  */
 export async function fetchAllEvents(): Promise<CalendarEvent[]> {
-  const { KNOCKOUT_EVENTS } = await import("@/utils/mockEvents");
+  const { MOCK_EVENTS } = await import("@/utils/mockEvents");
   const apiEvents = await fetchCalendarEventsFromApi();
 
-  return [...apiEvents, ...KNOCKOUT_EVENTS].sort((a, b) =>
+  return [...apiEvents, ...MOCK_EVENTS].sort((a, b) =>
     compareDatesAsc(a.startDate, b.startDate)
   );
 }
