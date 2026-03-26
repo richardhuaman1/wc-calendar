@@ -28,7 +28,7 @@ function ParticipantRow({ participant, compact = false }: ParticipantRowProps) {
   const displayName = isTbd
     ? TBD
     : compact
-      ? participant.countryCode.toUpperCase()
+      ? participant.shortCode
       : truncateName(participant.name);
 
   return (
