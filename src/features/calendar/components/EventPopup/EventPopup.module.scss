@@ -44,8 +44,8 @@
 // ── Close button (Figma: 20×20, icon color #5E5E5E) ────────
 .closeBtn {
   position: absolute;
-  top: 8px;
-  right: 8px;
+  top: 12px;
+  right: 12px;
   width: 20px;
   height: 20px;
   display: flex;
@@ -59,4 +59,9 @@
   font-size: 12px;
   line-height: 1;
   color: #5E5E5E;
+}
+
+// Prevent the group label and icons from overlapping with the close button
+.popup div:has(> div > h3) {
+  padding-right: 32px;
 }
