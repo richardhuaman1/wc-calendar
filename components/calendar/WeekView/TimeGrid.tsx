@@ -2,6 +2,7 @@ import { CalendarEvent } from "@/types/event";
 import { isSameDay, formatDateKey, getHour, getMinute, PROJECT_TODAY } from "@/utils/date";
 import { TBD, WEEK_HOURS, WEEK_ROW_HEIGHT, WEEK_EVENT_DURATION_ROWS } from "@/utils/constants";
 import WeekEventCard from "./WeekEventCard";
+import WeekEventCountCard from "./WeekEventCountCard";
 import TimeIndicator from "./TimeIndicator";
 import styles from "./WeekView.module.scss";
 
@@ -11,6 +12,7 @@ interface TimeGridProps {
   dragOffset: number;
   isDragging: boolean;
   onEventClick: (event: CalendarEvent, anchorEl: HTMLElement) => void;
+  onMultiEventClick: (events: CalendarEvent[]) => void;
 }
 
 function formatHourTime(hour: number): string {
@@ -28,6 +30,7 @@ export default function TimeGrid({
   dragOffset,
   isDragging,
   onEventClick,
+  onMultiEventClick,
 }: TimeGridProps) {
   const gridStyle = {
     transform: `translateX(${dragOffset}px)`,
@@ -53,7 +56,7 @@ export default function TimeGrid({
         </div>
 
         {/* Day columns — direct grid cells, aligned with header */}
-        {weekDays.map((day) => {
+        {weekDays.map((day, dayIndex) => {
           const key = formatDateKey(day);
           const isToday = isSameDay(day, PROJECT_TODAY);
           const dayEvents = eventsByDay.get(key) ?? [];
@@ -70,8 +73,8 @@ export default function TimeGrid({
                 </div>
               ))}
 
+              {/* Events for this day */}
               {(() => {
-                // Group events by start time to detect simultaneous events
                 const groups = new Map<string, CalendarEvent[]>();
                 for (const event of dayEvents) {
                   const timeKey = `${getHour(event.startDate)}:${getMinute(event.startDate)}`;
@@ -83,16 +86,34 @@ export default function TimeGrid({
                 return Array.from(groups.entries()).map(([timeKey, events]) => {
                   const h = getHour(events[0].startDate);
                   const m = getMinute(events[0].startDate);
-                  const halfHourRows = h * 2 + m / 30;
-                  const topPx = halfHourRows * WEEK_ROW_HEIGHT;
-                  const heightPx = WEEK_EVENT_DURATION_ROWS * WEEK_ROW_HEIGHT;
+                  const startRow = h * 2 + m / 30;
+                  const topPx = startRow * WEEK_ROW_HEIGHT;
                   const isCompact = events.length > 1;
+                  const height = WEEK_EVENT_DURATION_ROWS * WEEK_ROW_HEIGHT;
+
+                  // 3+ simultaneous events → show count card
+                  if (events.length >= 3) {
+                    return (
+                      <div
+                        key={timeKey}
+                        className={styles.eventSlot}
+                        style={{ top: `${topPx}px`, height: `${height}px` }}
+                      >
+                        <div
+                          className={styles.eventCard}
+                          onClick={() => onMultiEventClick(events)}
+                        >
+                          <WeekEventCountCard count={events.length} />
+                        </div>
+                      </div>
+                    );
+                  }
 
                   return (
                     <div
                       key={timeKey}
                       className={styles.eventSlot}
-                      style={{ top: `${topPx}px`, height: `${heightPx}px` }}
+                      style={{ top: `${topPx}px`, height: `${height}px` }}
                     >
                       {events.map((event) => {
                         const isTbd = event.participants.some((p) => p.name === TBD);
