@@ -48,14 +48,9 @@ export function formatDateKey(date: string | Date): string {
   return format(toDate(date), "yyyy-MM-dd");
 }
 
-/** Returns Monday of the week containing the given date. */
-export function getWeekStart(date: string | Date): Date {
-  return startOfWeek(toDate(date), { weekStartsOn: 1 });
-}
-
 /** Returns an array of 7 Date objects (Mon–Sun) for the week containing `date`. */
 export function getWeekDays(date: string | Date): Date[] {
-  const monday = getWeekStart(date);
+  const monday = startOfWeek(toDate(date), { weekStartsOn: 1 });
   return Array.from({ length: 7 }, (_, i) => addDays(monday, i));
 }
 

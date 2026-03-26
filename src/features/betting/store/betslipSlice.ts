@@ -31,7 +31,5 @@ const betslipSlice = createSlice({
 export const { toggleSelection, clearSelections } = betslipSlice.actions;
 export const selectSelections = (state: RootState) => state.betslip.selections;
 export const selectCount = (state: RootState) => state.betslip.selections.length;
-export const selectIsSelected = (id: string) => (state: RootState) =>
-  state.betslip.selections.some((s) => s.id === id);
 
 export default betslipSlice.reducer;
