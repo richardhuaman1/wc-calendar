@@ -11,7 +11,8 @@
 // ── Shared grid columns ─────────────────────────────────────
 // Both header and body MUST use this exact same definition
 // so columns align pixel-perfectly.
-$_grid-columns: $week-time-label-width repeat(7, 1fr);
+// --day-count CSS variable controls the number of day columns (default: 7).
+$_grid-columns: $week-time-label-width repeat(var(--day-count, 7), 1fr);
 
 // ── Day header bar ──────────────────────────────────────────
 .headerBar {

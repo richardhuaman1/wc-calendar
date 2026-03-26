@@ -69,6 +69,17 @@ export function shiftWeek(date: string | Date, offset: number): Date {
   return addWeeks(toDate(date), offset);
 }
 
+/** Returns an array of 3 consecutive Date objects starting from `date`. */
+export function getThreeDays(date: string | Date): Date[] {
+  const d = toDate(date);
+  return Array.from({ length: 3 }, (_, i) => addDays(d, i));
+}
+
+/** Shifts a date by `offset` × 3 days. */
+export function shiftThreeDays(date: string | Date, offset: number): Date {
+  return addDays(toDate(date), offset * 3);
+}
+
 /** Returns the hour (0–23) of a date/string. */
 export function getHour(date: string | Date): number {
   return getHours(toDate(date));
