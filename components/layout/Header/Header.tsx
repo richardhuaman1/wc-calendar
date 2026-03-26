@@ -2,8 +2,8 @@ import Logo from "@/components/shared/Logo/Logo";
 import Avatar from "@/components/shared/Avatar/Avatar";
 import ArrowDown from "@/components/shared/icons/ArrowDown";
 import HamburgerIcon from "@/components/shared/icons/HamburgerIcon";
+import BalanceDisplay from "./BalanceDisplay";
 import {
-  HEADER_BALANCE,
   HEADER_BONUS,
   HEADER_RELOAD,
   HEADER_MENU_ARIA,
@@ -22,7 +22,7 @@ export default function Header() {
 
       <div className={styles.right}>
         <div className={styles.balance}>
-          <span className={styles.amount}>{HEADER_BALANCE}</span>
+          <span className={styles.amount}><BalanceDisplay /></span>
           <div className={styles.bonusRow}>
             <ArrowDown size={ARROW_SIZE} color="currentColor" />
             <span className={styles.bonus}>{HEADER_BONUS}</span>
