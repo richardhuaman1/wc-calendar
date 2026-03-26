@@ -21,6 +21,7 @@ import { useHorizontalSwipe } from "@/hooks/useHorizontalSwipe";
 import WeekHeader from "./WeekHeader";
 import TimeGrid from "./TimeGrid";
 import EventPopup from "@/components/calendar/EventPopup/EventPopup";
+import EventListModal from "@/components/calendar/EventListModal/EventListModal";
 import styles from "./WeekView.module.scss";
 
 interface WeekViewProps {
@@ -41,6 +42,7 @@ const WeekView = forwardRef<WeekViewHandle, WeekViewProps>(
   function WeekView({ events, onMonthChange }, ref) {
     const [weekOffset, setWeekOffset] = useState(0);
     const [popup, setPopup] = useState<PopupState | null>(null);
+    const [multiEvents, setMultiEvents] = useState<CalendarEvent[] | null>(null);
 
     const { isSelected, toggle } = useBetslip();
 
@@ -74,10 +76,12 @@ const WeekView = forwardRef<WeekViewHandle, WeekViewProps>(
     const goToNextWeek = useCallback(() => {
       setWeekOffset((o) => o + 1);
       setPopup(null);
+      setMultiEvents(null);
     }, []);
     const goToPrevWeek = useCallback(() => {
       setWeekOffset((o) => o - 1);
       setPopup(null);
+      setMultiEvents(null);
     }, []);
 
     const { handlers, dragOffset, isDragging } = useHorizontalSwipe({
@@ -93,6 +97,12 @@ const WeekView = forwardRef<WeekViewHandle, WeekViewProps>(
     );
 
     const handleClosePopup = useCallback(() => setPopup(null), []);
+
+    const handleMultiEventClick = useCallback(
+      (events: CalendarEvent[]) => setMultiEvents(events),
+      []
+    );
+    const handleCloseMulti = useCallback(() => setMultiEvents(null), []);
 
     useImperativeHandle(
       ref,
@@ -117,6 +127,7 @@ const WeekView = forwardRef<WeekViewHandle, WeekViewProps>(
             dragOffset={dragOffset}
             isDragging={isDragging}
             onEventClick={handleEventClick}
+            onMultiEventClick={handleMultiEventClick}
           />
         </div>
 
@@ -125,6 +136,15 @@ const WeekView = forwardRef<WeekViewHandle, WeekViewProps>(
             event={popup.event}
             anchorRect={popup.anchorRect}
             onClose={handleClosePopup}
+            onOddsToggle={toggle}
+            isSelected={isSelected}
+          />
+        )}
+
+        {multiEvents && (
+          <EventListModal
+            events={multiEvents}
+            onClose={handleCloseMulti}
             onOddsToggle={toggle}
             isSelected={isSelected}
           />
