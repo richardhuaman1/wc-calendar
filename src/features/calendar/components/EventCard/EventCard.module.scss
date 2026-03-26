@@ -1,0 +1,354 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+.card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background: $color-surface;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+  border-radius: $radius-md;
+  padding: $spacing-sm;
+}
+
+.cardExpanded {
+  padding-bottom: $spacing-md;
+}
+
+.streamSection {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows $transition-accordion;
+}
+
+.streamSectionOpen {
+  grid-template-rows: 1fr;
+}
+
+.streamInner {
+  overflow: hidden;
+}
+
+.streamBanner {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: $spacing-xs;
+  width: 100%;
+  padding: $spacing-xs;
+  margin-bottom: $spacing-sm;
+  background: linear-gradient(270deg, #560E0E 0%, #F42B2B 100%);
+  border-radius: $radius-sm;
+}
+
+.streamText {
+  font-size: $font-size-2xs;
+  font-weight: $font-weight-medium;
+  color: $color-surface;
+}
+
+.eventRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: $spacing-sm;
+  width: 100%;
+  text-align: left;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+  flex: 1;
+  min-width: 0;
+}
+
+.nameRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: $spacing-sm;
+}
+
+.name {
+  margin: 0;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: $color-text;
+}
+
+.nameTbd {
+  font-size: $font-size-2xs;
+  font-weight: $font-weight-medium;
+  color: $color-text-muted;
+  line-height: 14px;
+}
+
+.group {
+  font-size: $font-size-2xs;
+  color: $color-text-muted;
+  flex-shrink: 0;
+  text-align: right;
+}
+
+.metaRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: $spacing-xs;
+}
+
+.time {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: $color-text;
+  flex-shrink: 0;
+}
+
+.leagueInfo {
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+  flex: 1;
+  min-width: 0;
+}
+
+.leagueIcon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+.league {
+  font-size: $font-size-sm;
+  color: $color-text;
+  opacity: $opacity-muted;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.icons {
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+  flex-shrink: 0;
+}
+
+.chevron {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &::after {
+    content: '';
+    display: block;
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid $color-tab-inactive;
+    border-bottom: 2px solid $color-tab-inactive;
+    transform: rotate(45deg) translateY(-2px);
+    transition: transform $transition-accordion;
+  }
+}
+
+.chevronUp::after {
+  transform: rotate(-135deg) translateY(-2px);
+}
+
+.contentSection {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows $transition-accordion;
+}
+
+.contentSectionOpen {
+  grid-template-rows: 1fr;
+}
+
+.contentInner {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $spacing-sm;
+  padding-top: $spacing-sm;
+  width: 100%;
+}
+
+.contentBody {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+  width: 100%;
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background: $color-border;
+}
+
+.participants {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+  width: 100%;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.participantGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: $spacing-xs;
+  width: 100%;
+}
+
+.participantRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.participantLeft {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: $spacing-xs;
+}
+
+.participantName {
+  font-size: $font-size-md;
+  font-weight: $font-weight-medium;
+  color: $color-text;
+  line-height: 16px;
+}
+
+.sponsorBadge {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 3px;
+  box-sizing: border-box;
+  width: 72px;
+  height: 14px;
+  padding: 0 $spacing-xs;
+  background: $color-surface-alt;
+  border-radius: $radius-sm;
+
+  svg {
+    display: block;
+    flex-shrink: 0;
+  }
+}
+
+.sponsorText {
+  font-size: $font-size-3xs;
+  font-weight: $font-weight-regular;
+  color: $color-text;
+  line-height: 10px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.participantScore {
+  font-size: $font-size-md;
+  font-weight: $font-weight-medium;
+  color: $color-text;
+  line-height: 16px;
+  text-align: right;
+}
+
+.marketSlider {
+  overflow: hidden;
+  width: 100%;
+  touch-action: pan-y;
+}
+
+.marketTrack {
+  display: flex;
+  transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+.marketTrackDragging {
+  transition: none;
+}
+
+.marketSlide {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+  min-width: 100%;
+  flex-shrink: 0;
+}
+
+.marketRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: $spacing-xs;
+  width: 100%;
+}
+
+.marketName {
+  font-size: $font-size-2xs;
+  color: $color-tab-inactive;
+  text-align: center;
+}
+
+.superCuotaBadge {
+  font-size: $font-size-3xs;
+  font-weight: $font-weight-bold;
+  color: $color-surface;
+  background: $color-cta;
+  border-radius: $radius-sm;
+  padding: 1px $spacing-xs;
+  line-height: 12px;
+}
+
+.oddsRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: $spacing-xs;
+  width: 100%;
+}
+
+.oddsBtn {
+  flex: 1;
+  min-width: 0;
+}
+
+.dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: $spacing-xs;
+  width: 100%;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: $radius-full;
+  background: $color-border;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+}
+
+.dotActive {
+  background: $color-primary;
+}
