@@ -1,10 +1,9 @@
 "use client";
 
 import { CalendarEvent, IsSelectedFn, OddsToggleFn } from "@/features/calendar/types/event";
-import { TBD, VENUE_ROLE_HOME } from "@/features/calendar/utils/constants";
-import { STREAM_BANNER_TEXT } from "@/shared/constants/labels";
-import PlayIcon from "@/shared/components/icons/PlayIcon";
+import { getParticipantNames } from "@/features/calendar/utils/getParticipantNames";
 import EventHeader from "./EventHeader";
+import StreamBanner from "./StreamBanner";
 import ParticipantList from "./ParticipantList";
 import MarketSlider from "./MarketSlider";
 import styles from "./EventCard.module.scss";
@@ -20,21 +19,13 @@ export default function EventContent({
   onOddsToggle,
   isSelected,
 }: EventContentProps) {
-  const homeName =
-    event.participants.find((p) => p.role === VENUE_ROLE_HOME)?.name ?? TBD;
-  const awayName =
-    event.participants.find((p) => p.role !== VENUE_ROLE_HOME)?.name ?? TBD;
+  const { home, away } = getParticipantNames(event);
 
   return (
     <article className={styles.contentBody}>
-      {event.hasLiveStream && (
-        <div className={styles.streamBanner}>
-          <PlayIcon />
-          <span className={styles.streamText}>{STREAM_BANNER_TEXT}</span>
-        </div>
-      )}
+      {event.hasLiveStream && <StreamBanner />}
 
-      <EventHeader event={event} home={homeName} away={awayName} />
+      <EventHeader event={event} home={home} away={away} />
 
       <div className={styles.divider} />
 

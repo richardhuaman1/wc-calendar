@@ -12,7 +12,6 @@ import {
 } from "date-fns";
 import { es } from "date-fns/locale";
 
-/** Simulated "now" for development; replace with `new Date()` in production. */
 export const PROJECT_TODAY = new Date("2026-06-11T14:00:00");
 
 function toDate(value: string | Date): Date {

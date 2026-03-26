@@ -9,10 +9,6 @@ export interface EventGroup {
   events: CalendarEvent[];
 }
 
-/**
- * Groups calendar events that share the same start hour:minute,
- * computing the vertical position for each group in the time grid.
- */
 export function groupEventsByTime(dayEvents: CalendarEvent[]): EventGroup[] {
   const map = new Map<string, CalendarEvent[]>();
 

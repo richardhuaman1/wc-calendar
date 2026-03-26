@@ -1,6 +1,5 @@
 @use 'variables' as *;
 
-// Bandera rectangular 23×16 — usada en filas de participantes (expanded card)
 .flag {
   display: inline-block;
   width: 23px !important;
@@ -11,7 +10,6 @@
   flex-shrink: 0;
 }
 
-// Placeholder para país vacío ("Por definir")
 .placeholder {
   display: inline-block;
   width: 23px;

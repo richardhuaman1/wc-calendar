@@ -98,7 +98,6 @@ const TEAM_GROUP: Record<string, string> = {
   "Colombia": "Grupo K",
 };
 
-// FIFA 3-letter short codes for compact display (WeekView simultaneous events)
 const TEAM_SHORT_CODE: Record<string, string> = {
   "México": "MEX",
   "Sudáfrica": "RSA",

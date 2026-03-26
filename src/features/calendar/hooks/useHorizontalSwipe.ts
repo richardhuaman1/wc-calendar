@@ -1,6 +1,5 @@
 import { useRef, useCallback, useState } from "react";
-
-const SWIPE_THRESHOLD = 50;
+import { SWIPE_THRESHOLD } from "@/shared/constants/touch";
 
 interface UseHorizontalSwipeOptions {
   onSwipeLeft: () => void;
@@ -15,19 +14,11 @@ interface SwipeHandlers {
 
 interface UseHorizontalSwipeReturn {
   handlers: SwipeHandlers;
-  /** Current drag offset in px (follows the finger) */
   dragOffset: number;
-  /** True while the user is dragging */
   isDragging: boolean;
-  /** Direction of the last completed swipe ("left" | "right" | null) */
   swipeDirection: "left" | "right" | null;
 }
 
-/**
- * Horizontal swipe detection with drag tracking.
- * Exposes dragOffset so the UI can follow the finger,
- * then triggers onSwipeLeft/onSwipeRight on release.
- */
 export function useHorizontalSwipe({
   onSwipeLeft,
   onSwipeRight,

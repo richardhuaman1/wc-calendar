@@ -1,27 +1,16 @@
 "use client";
 
-import {
-  forwardRef,
-  useCallback,
-  useEffect,
-  useImperativeHandle,
-  useMemo,
-  useState,
-} from "react";
+import { forwardRef, useImperativeHandle } from "react";
 import { CalendarEvent } from "@/features/calendar/types/event";
-import {
-  getWeekDays,
-  shiftWeek,
-  formatDateKey,
-  getMonthName,
-  PROJECT_TODAY,
-} from "@/features/calendar/utils/date";
+import { ScrollableViewHandle } from "@/features/calendar/types/view";
+import { getWeekDays, shiftWeek } from "@/features/calendar/utils/date";
 import { useBetslip } from "@/features/betting/hooks/useBetslip";
-import { useHorizontalSwipe } from "@/features/calendar/hooks/useHorizontalSwipe";
+import { useEventsByDay } from "@/features/calendar/hooks/useEventsByDay";
+import { useEventPopup } from "@/features/calendar/hooks/useEventPopup";
+import { useGridNavigation } from "@/features/calendar/hooks/useGridNavigation";
 import WeekHeader from "./WeekHeader";
 import TimeGrid from "./TimeGrid";
-import EventPopup from "@/features/calendar/components/EventPopup/EventPopup";
-import EventListModal from "@/features/calendar/components/EventListModal/EventListModal";
+import GridOverlays from "@/features/calendar/components/GridOverlays/GridOverlays";
 import styles from "./WeekView.module.scss";
 
 interface WeekViewProps {
@@ -29,88 +18,30 @@ interface WeekViewProps {
   onMonthChange: (month: string) => void;
 }
 
-export interface WeekViewHandle {
-  scrollToToday: () => void;
-}
-
-interface PopupState {
-  event: CalendarEvent;
-  anchorRect: DOMRect;
-}
-
-const WeekView = forwardRef<WeekViewHandle, WeekViewProps>(
+const WeekView = forwardRef<ScrollableViewHandle, WeekViewProps>(
   function WeekView({ events, onMonthChange }, ref) {
-    const [weekOffset, setWeekOffset] = useState(0);
-    const [popup, setPopup] = useState<PopupState | null>(null);
-    const [multiEvents, setMultiEvents] = useState<CalendarEvent[] | null>(null);
-
     const { isSelected, toggle } = useBetslip();
+    const eventsByDay = useEventsByDay(events);
 
-    const referenceDate = useMemo(
-      () => shiftWeek(PROJECT_TODAY, weekOffset),
-      [weekOffset]
-    );
+    const {
+      popup,
+      multiEvents,
+      openPopup,
+      closePopup,
+      openMulti,
+      closeMulti,
+      dismissAll,
+    } = useEventPopup();
 
-    const weekDays = useMemo(() => getWeekDays(referenceDate), [referenceDate]);
+    const { days, handlers, dragOffset, isDragging, scrollToToday } =
+      useGridNavigation({
+        getDays: getWeekDays,
+        shiftDate: shiftWeek,
+        onMonthChange,
+        onNavigate: dismissAll,
+      });
 
-    // Update parent's month indicator when visible week changes
-    useEffect(() => {
-      onMonthChange(getMonthName(weekDays[0]));
-    }, [weekDays, onMonthChange]);
-
-    // Index events by day key for O(1) lookup in the grid
-    const eventsByDay = useMemo(() => {
-      const map = new Map<string, CalendarEvent[]>();
-      for (const event of events) {
-        const key = formatDateKey(event.startDate);
-        const list = map.get(key);
-        if (list) {
-          list.push(event);
-        } else {
-          map.set(key, [event]);
-        }
-      }
-      return map;
-    }, [events]);
-
-    const goToNextWeek = useCallback(() => {
-      setWeekOffset((o) => o + 1);
-      setPopup(null);
-      setMultiEvents(null);
-    }, []);
-    const goToPrevWeek = useCallback(() => {
-      setWeekOffset((o) => o - 1);
-      setPopup(null);
-      setMultiEvents(null);
-    }, []);
-
-    const { handlers, dragOffset, isDragging } = useHorizontalSwipe({
-      onSwipeLeft: goToNextWeek,
-      onSwipeRight: goToPrevWeek,
-    });
-
-    const handleEventClick = useCallback(
-      (event: CalendarEvent, anchorEl: HTMLElement) => {
-        setPopup({ event, anchorRect: anchorEl.getBoundingClientRect() });
-      },
-      []
-    );
-
-    const handleClosePopup = useCallback(() => setPopup(null), []);
-
-    const handleMultiEventClick = useCallback(
-      (events: CalendarEvent[]) => setMultiEvents(events),
-      []
-    );
-    const handleCloseMulti = useCallback(() => setMultiEvents(null), []);
-
-    useImperativeHandle(
-      ref,
-      () => ({
-        scrollToToday: () => setWeekOffset(0),
-      }),
-      []
-    );
+    useImperativeHandle(ref, () => ({ scrollToToday }), [scrollToToday]);
 
     return (
       <>
@@ -120,35 +51,25 @@ const WeekView = forwardRef<WeekViewHandle, WeekViewProps>(
           onTouchMove={handlers.onTouchMove}
           onTouchEnd={handlers.onTouchEnd}
         >
-          <WeekHeader weekDays={weekDays} />
+          <WeekHeader weekDays={days} />
           <TimeGrid
-            weekDays={weekDays}
+            weekDays={days}
             eventsByDay={eventsByDay}
             dragOffset={dragOffset}
             isDragging={isDragging}
-            onEventClick={handleEventClick}
-            onMultiEventClick={handleMultiEventClick}
+            onEventClick={openPopup}
+            onMultiEventClick={openMulti}
           />
         </div>
 
-        {popup && (
-          <EventPopup
-            event={popup.event}
-            anchorRect={popup.anchorRect}
-            onClose={handleClosePopup}
-            onOddsToggle={toggle}
-            isSelected={isSelected}
-          />
-        )}
-
-        {multiEvents && (
-          <EventListModal
-            events={multiEvents}
-            onClose={handleCloseMulti}
-            onOddsToggle={toggle}
-            isSelected={isSelected}
-          />
-        )}
+        <GridOverlays
+          popup={popup}
+          multiEvents={multiEvents}
+          onClosePopup={closePopup}
+          onCloseMulti={closeMulti}
+          onOddsToggle={toggle}
+          isSelected={isSelected}
+        />
       </>
     );
   }

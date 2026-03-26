@@ -46,7 +46,6 @@ export interface DayGroup {
   events: CalendarEvent[];
 }
 
-/** Callback signature for toggling an odds selection in the betslip. */
 export type OddsToggleFn = (
   selection: Selection,
   eventId: string,
@@ -54,5 +53,4 @@ export type OddsToggleFn = (
   marketName: string
 ) => void;
 
-/** Predicate to check if a selection is currently in the betslip. */
 export type IsSelectedFn = (selectionId: string) => boolean;

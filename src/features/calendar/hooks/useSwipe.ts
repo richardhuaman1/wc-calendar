@@ -1,13 +1,11 @@
 import { type RefObject, useRef, useState } from "react";
+import { SWIPE_THRESHOLD } from "@/shared/constants/touch";
 
-const SWIPE_THRESHOLD = 50;
 const RUBBER_BAND_FACTOR = 0.3;
 const FALLBACK_WIDTH = 375;
 
 interface UseSwipeOptions {
-  /** Total number of slides */
   total: number;
-  /** Ref to the slider container (used for width calculation) */
   sliderRef: RefObject<HTMLDivElement | null>;
 }
 
@@ -21,15 +19,10 @@ interface UseSwipeReturn {
   activeIndex: number;
   setActiveIndex: (index: number) => void;
   isDragging: boolean;
-  /** Combined translateX percentage (slide position + drag offset) */
   translateX: number;
   handlers: SwipeHandlers;
 }
 
-/**
- * Generic touch-swipe hook for horizontal carousel navigation.
- * Supports rubber-band overscroll at edges and configurable threshold.
- */
 export function useSwipe({ total, sliderRef }: UseSwipeOptions): UseSwipeReturn {
   const [activeIndex, setActiveIndex] = useState(0);
   const [dragOffset, setDragOffset] = useState(0);
@@ -48,7 +41,6 @@ export function useSwipe({ total, sliderRef }: UseSwipeOptions): UseSwipeReturn 
   function onTouchMove(e: React.TouchEvent) {
     const deltaX = e.touches[0].clientX - touchStartX.current;
 
-    // Rubber band at edges
     if ((activeIndex === 0 && deltaX > 0) || (activeIndex === lastIdx && deltaX < 0)) {
       setDragOffset(deltaX * RUBBER_BAND_FACTOR);
       return;

@@ -1,10 +1,5 @@
 import { useCallback, useEffect, useRef } from "react";
 
-/**
- * Extracts shared modal/backdrop dismiss logic:
- * - Backdrop click detection (pointer down + up must both hit the backdrop)
- * - Escape key listener
- */
 export function useModalDismiss(onClose: () => void) {
   const pointerDownTargetRef = useRef<EventTarget | null>(null);
 

@@ -7,10 +7,6 @@ import {
   MONTH_OBSERVER_THRESHOLD,
 } from "@/features/calendar/utils/constants";
 
-/**
- * Observes which day-group sections are visible inside a scroll container
- * and calls `onMonthChange` with the name of the topmost visible month.
- */
 export function useMonthObserver(
   dayGroups: DayGroup[],
   dayGroupRefs: RefObject<Map<string, HTMLDivElement>>,

@@ -2,10 +2,6 @@ import { CalendarEvent, DayGroup } from "@/features/calendar/types/event";
 import { parseISO } from "date-fns";
 import { compareDatesAsc, formatDateKey } from "./date";
 
-/**
- * Groups a flat list of calendar events into day-based buckets,
- * sorted chronologically by date.
- */
 export function groupEventsByDay(events: CalendarEvent[]): DayGroup[] {
   const map = new Map<string, DayGroup>();
 

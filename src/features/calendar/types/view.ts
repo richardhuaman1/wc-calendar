@@ -5,3 +5,7 @@ export interface ViewTab {
   label: string;
   icon: React.ReactNode;
 }
+
+export interface ScrollableViewHandle {
+  scrollToToday: () => void;
+}

@@ -1,27 +1,16 @@
 "use client";
 
-import {
-  forwardRef,
-  useCallback,
-  useEffect,
-  useImperativeHandle,
-  useMemo,
-  useState,
-} from "react";
+import { forwardRef, useImperativeHandle } from "react";
 import { CalendarEvent } from "@/features/calendar/types/event";
-import {
-  getThreeDays,
-  shiftThreeDays,
-  formatDateKey,
-  getMonthName,
-  PROJECT_TODAY,
-} from "@/features/calendar/utils/date";
+import { ScrollableViewHandle } from "@/features/calendar/types/view";
+import { getThreeDays, shiftThreeDays } from "@/features/calendar/utils/date";
 import { useBetslip } from "@/features/betting/hooks/useBetslip";
-import { useHorizontalSwipe } from "@/features/calendar/hooks/useHorizontalSwipe";
+import { useEventsByDay } from "@/features/calendar/hooks/useEventsByDay";
+import { useEventPopup } from "@/features/calendar/hooks/useEventPopup";
+import { useGridNavigation } from "@/features/calendar/hooks/useGridNavigation";
 import WeekHeader from "@/features/calendar/components/WeekView/WeekHeader";
 import TimeGrid from "@/features/calendar/components/WeekView/TimeGrid";
-import EventPopup from "@/features/calendar/components/EventPopup/EventPopup";
-import EventListModal from "@/features/calendar/components/EventListModal/EventListModal";
+import GridOverlays from "@/features/calendar/components/GridOverlays/GridOverlays";
 import styles from "./ThreeDayView.module.scss";
 
 interface ThreeDayViewProps {
@@ -29,86 +18,30 @@ interface ThreeDayViewProps {
   onMonthChange: (month: string) => void;
 }
 
-export interface ThreeDayViewHandle {
-  scrollToToday: () => void;
-}
-
-interface PopupState {
-  event: CalendarEvent;
-  anchorRect: DOMRect;
-}
-
-const ThreeDayView = forwardRef<ThreeDayViewHandle, ThreeDayViewProps>(
+const ThreeDayView = forwardRef<ScrollableViewHandle, ThreeDayViewProps>(
   function ThreeDayView({ events, onMonthChange }, ref) {
-    const [pageOffset, setPageOffset] = useState(0);
-    const [popup, setPopup] = useState<PopupState | null>(null);
-    const [multiEvents, setMultiEvents] = useState<CalendarEvent[] | null>(null);
-
     const { isSelected, toggle } = useBetslip();
+    const eventsByDay = useEventsByDay(events);
 
-    const referenceDate = useMemo(
-      () => shiftThreeDays(PROJECT_TODAY, pageOffset),
-      [pageOffset]
-    );
+    const {
+      popup,
+      multiEvents,
+      openPopup,
+      closePopup,
+      openMulti,
+      closeMulti,
+      dismissAll,
+    } = useEventPopup();
 
-    const days = useMemo(() => getThreeDays(referenceDate), [referenceDate]);
+    const { days, handlers, dragOffset, isDragging, scrollToToday } =
+      useGridNavigation({
+        getDays: getThreeDays,
+        shiftDate: shiftThreeDays,
+        onMonthChange,
+        onNavigate: dismissAll,
+      });
 
-    useEffect(() => {
-      onMonthChange(getMonthName(days[0]));
-    }, [days, onMonthChange]);
-
-    const eventsByDay = useMemo(() => {
-      const map = new Map<string, CalendarEvent[]>();
-      for (const event of events) {
-        const key = formatDateKey(event.startDate);
-        const list = map.get(key);
-        if (list) {
-          list.push(event);
-        } else {
-          map.set(key, [event]);
-        }
-      }
-      return map;
-    }, [events]);
-
-    const goToNext = useCallback(() => {
-      setPageOffset((o) => o + 1);
-      setPopup(null);
-      setMultiEvents(null);
-    }, []);
-    const goToPrev = useCallback(() => {
-      setPageOffset((o) => o - 1);
-      setPopup(null);
-      setMultiEvents(null);
-    }, []);
-
-    const { handlers, dragOffset, isDragging } = useHorizontalSwipe({
-      onSwipeLeft: goToNext,
-      onSwipeRight: goToPrev,
-    });
-
-    const handleEventClick = useCallback(
-      (event: CalendarEvent, anchorEl: HTMLElement) => {
-        setPopup({ event, anchorRect: anchorEl.getBoundingClientRect() });
-      },
-      []
-    );
-
-    const handleClosePopup = useCallback(() => setPopup(null), []);
-
-    const handleMultiEventClick = useCallback(
-      (events: CalendarEvent[]) => setMultiEvents(events),
-      []
-    );
-    const handleCloseMulti = useCallback(() => setMultiEvents(null), []);
-
-    useImperativeHandle(
-      ref,
-      () => ({
-        scrollToToday: () => setPageOffset(0),
-      }),
-      []
-    );
+    useImperativeHandle(ref, () => ({ scrollToToday }), [scrollToToday]);
 
     return (
       <>
@@ -124,29 +57,19 @@ const ThreeDayView = forwardRef<ThreeDayViewHandle, ThreeDayViewProps>(
             eventsByDay={eventsByDay}
             dragOffset={dragOffset}
             isDragging={isDragging}
-            onEventClick={handleEventClick}
-            onMultiEventClick={handleMultiEventClick}
+            onEventClick={openPopup}
+            onMultiEventClick={openMulti}
           />
         </div>
 
-        {popup && (
-          <EventPopup
-            event={popup.event}
-            anchorRect={popup.anchorRect}
-            onClose={handleClosePopup}
-            onOddsToggle={toggle}
-            isSelected={isSelected}
-          />
-        )}
-
-        {multiEvents && (
-          <EventListModal
-            events={multiEvents}
-            onClose={handleCloseMulti}
-            onOddsToggle={toggle}
-            isSelected={isSelected}
-          />
-        )}
+        <GridOverlays
+          popup={popup}
+          multiEvents={multiEvents}
+          onClosePopup={closePopup}
+          onCloseMulti={closeMulti}
+          onOddsToggle={toggle}
+          isSelected={isSelected}
+        />
       </>
     );
   }

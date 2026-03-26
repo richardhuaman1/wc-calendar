@@ -1,6 +1,5 @@
 @use 'variables' as *;
 
-// ── Backdrop ────────────────────────────────────────────────
 .backdrop {
   position: fixed;
   inset: 0;
@@ -11,8 +10,6 @@
   justify-content: center;
 }
 
-// ── Bottom sheet ────────────────────────────────────────────
-// Figma: bg #F5F5F5, border-radius 12px top
 .sheet {
   width: 100%;
   max-height: 85vh;
@@ -32,7 +29,6 @@
   }
 }
 
-// ── Header ──────────────────────────────────────────────────
 .header {
   display: flex;
   align-items: center;
@@ -62,13 +58,14 @@
   color: #5E5E5E;
 }
 
-// ── Scrollable event list ───────────────────────────────────
 .list {
   overflow-y: auto;
   padding: 0 16px 16px;
   display: flex;
   flex-direction: column;
   gap: 12px;
+  list-style: none;
+  margin: 0;
 }
 
 .card {

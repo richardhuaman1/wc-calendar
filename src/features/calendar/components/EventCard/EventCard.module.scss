@@ -1,8 +1,6 @@
 @use 'variables' as *;
 @use 'mixins' as *;
 
-// ── Card ─────────────────────────────────────────────────────
-
 .card {
   display: flex;
   flex-direction: column;
@@ -16,8 +14,6 @@
 .cardExpanded {
   padding-bottom: $spacing-md;
 }
-
-// ── Stream banner (top accordion) ────────────────────────────
 
 .streamSection {
   display: grid;
@@ -50,8 +46,6 @@
   font-weight: $font-weight-medium;
   color: $color-surface;
 }
-
-// ── Header row ──────────────────────────────────────────────
 
 .eventRow {
   display: flex;
@@ -167,8 +161,6 @@
   transform: rotate(-135deg) translateY(-2px);
 }
 
-// ── Content accordion (bottom) ───────────────────────────────
-
 .contentSection {
   display: grid;
   grid-template-rows: 0fr;
@@ -189,16 +181,12 @@
   width: 100%;
 }
 
-// ── Reusable content body (used by EventContent) ─────────────
-
 .contentBody {
   display: flex;
   flex-direction: column;
   gap: $spacing-sm;
   width: 100%;
 }
-
-// ── Expanded content ─────────────────────────────────────────
 
 .divider {
   width: 100%;
@@ -216,7 +204,6 @@
   padding: 0;
 }
 
-// Contenedor "País": columna que agrupa la fila + badge patrocinador
 .participantGroup {
   display: flex;
   flex-direction: column;
@@ -225,7 +212,6 @@
   width: 100%;
 }
 
-// Fila: [flag + nombre] ←→ [score]
 .participantRow {
   display: flex;
   flex-direction: row;
@@ -234,7 +220,6 @@
   width: 100%;
 }
 
-// Lado izquierdo: bandera + nombre
 .participantLeft {
   display: flex;
   flex-direction: row;
@@ -283,8 +268,6 @@
   line-height: 16px;
   text-align: right;
 }
-
-// ── Market slider (touch swipe) ─────────────────────────────
 
 .marketSlider {
   overflow: hidden;
@@ -335,8 +318,6 @@
   line-height: 12px;
 }
 
-// ── Odds ────────────────────────────────────────────────────
-
 .oddsRow {
   display: flex;
   flex-direction: row;
@@ -345,13 +326,10 @@
   width: 100%;
 }
 
-// Layout override: stretch each OddsButton to fill the row equally
 .oddsBtn {
   flex: 1;
   min-width: 0;
 }
-
-// ── Dots ────────────────────────────────────────────────────
 
 .dots {
   display: flex;

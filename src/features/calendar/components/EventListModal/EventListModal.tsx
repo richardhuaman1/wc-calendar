@@ -4,6 +4,7 @@ import { useModalDismiss } from "@/shared/hooks/useModalDismiss";
 import { CalendarEvent, IsSelectedFn, OddsToggleFn } from "@/features/calendar/types/event";
 import EventContent from "@/features/calendar/components/EventCard/EventContent";
 import CloseIcon from "@/shared/components/icons/CloseIcon";
+import { stopTouchPropagation } from "@/shared/constants/touch";
 import styles from "./EventListModal.module.scss";
 
 interface EventListModalProps {
@@ -25,15 +26,14 @@ export default function EventListModal({
     <div
       className={styles.backdrop}
       {...backdropProps}
-      onTouchStart={(e) => e.stopPropagation()}
-      onTouchMove={(e) => e.stopPropagation()}
+      {...stopTouchPropagation}
     >
       <div
         role="dialog"
+        aria-modal="true"
         aria-labelledby="event-list-title"
         className={styles.sheet}
-        onTouchStart={(e) => e.stopPropagation()}
-        onTouchMove={(e) => e.stopPropagation()}
+        {...stopTouchPropagation}
       >
         <header className={styles.header}>
           <h2 id="event-list-title" className={styles.title}>
@@ -44,17 +44,17 @@ export default function EventListModal({
           </button>
         </header>
 
-        <div className={styles.list}>
+        <ul className={styles.list}>
           {events.map((event) => (
-            <div key={event.id} className={styles.card}>
+            <li key={event.id} className={styles.card}>
               <EventContent
                 event={event}
                 onOddsToggle={onOddsToggle}
                 isSelected={isSelected}
               />
-            </div>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </div>
   );

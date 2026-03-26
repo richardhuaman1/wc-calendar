@@ -7,7 +7,6 @@
   overflow-y: auto;
 }
 
-// Both header and body must share this definition so columns align.
 $_grid-columns: $week-time-label-width repeat(var(--day-count, 7), 1fr);
 
 .headerBar {
@@ -163,7 +162,6 @@ $_grid-columns: $week-time-label-width repeat(var(--day-count, 7), 1fr);
   border-top: 1px dashed rgba(255, 0, 0, 0.6);
 }
 
-// Position only; visual styling lives in WeekEventCard.module.scss.
 .eventSlot {
   position: absolute;
   left: 0;
@@ -180,6 +178,13 @@ $_grid-columns: $week-time-label-width repeat(var(--day-count, 7), 1fr);
   min-width: 0;
   height: 100%;
   cursor: pointer;
+  // Reset button defaults (EventSlot renders <button> for accessibility)
+  background: none;
+  border: none;
+  padding: 0;
+  text-align: inherit;
+  font: inherit;
+  color: inherit;
 }
 
 .eventCardTbd {

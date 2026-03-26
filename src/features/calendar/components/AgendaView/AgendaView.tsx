@@ -1,24 +1,12 @@
 "use client";
 
-import {
-  type RefObject,
-  forwardRef,
-  useImperativeHandle,
-  useMemo,
-  useRef,
-} from "react";
+import { type RefObject, forwardRef, useImperativeHandle } from "react";
 import { CalendarEvent } from "@/features/calendar/types/event";
-import { formatDateKey, PROJECT_TODAY } from "@/features/calendar/utils/date";
-import { groupEventsByDay } from "@/features/calendar/utils/groupEventsByDay";
-import { useBetslip } from "@/features/betting/hooks/useBetslip";
-import { useAccordion } from "@/features/calendar/hooks/useAccordion";
-import { useMonthObserver } from "@/features/calendar/hooks/useMonthObserver";
+import { ScrollableViewHandle } from "@/features/calendar/types/view";
+import { formatDateKey } from "@/features/calendar/utils/date";
+import { useAgendaView } from "@/features/calendar/hooks/useAgendaView";
 import DayGroup from "@/features/calendar/components/DayGroup/DayGroup";
 import styles from "./AgendaView.module.scss";
-
-export interface AgendaViewHandle {
-  scrollToToday: () => void;
-}
 
 interface AgendaViewProps {
   events: CalendarEvent[];
@@ -26,41 +14,29 @@ interface AgendaViewProps {
   scrollContainerRef?: RefObject<HTMLDivElement | null>;
 }
 
-const AgendaView = forwardRef<AgendaViewHandle, AgendaViewProps>(
+const AgendaView = forwardRef<ScrollableViewHandle, AgendaViewProps>(
   function AgendaView({ events, onMonthChange, scrollContainerRef }, ref) {
-    const { isSelected, toggle } = useBetslip();
+    const {
+      dayGroups,
+      expandedEventIds,
+      toggleExpand,
+      toggle,
+      isSelected,
+      setDayGroupRef,
+      scrollToToday,
+    } = useAgendaView(events, onMonthChange, scrollContainerRef);
 
-    const dayGroups = useMemo(() => groupEventsByDay(events), [events]);
-
-    const { expandedEventIds, toggleExpand, expandToday } =
-      useAccordion(events);
-
-    const dayGroupRefs = useRef<Map<string, HTMLDivElement>>(new Map());
-
-    useMonthObserver(dayGroups, dayGroupRefs, onMonthChange, scrollContainerRef);
-
-    useImperativeHandle(ref, () => ({
-      scrollToToday() {
-        const todayKey = formatDateKey(PROJECT_TODAY);
-        dayGroupRefs.current
-          .get(todayKey)
-          ?.scrollIntoView({ behavior: "smooth", block: "start" });
-        expandToday();
-      },
-    }));
+    useImperativeHandle(ref, () => ({ scrollToToday }));
 
     return (
-      <div className={styles.container} role="feed" aria-label="Eventos del calendario">
+      <div className={styles.container} aria-label="Eventos del calendario">
         {dayGroups.map((group) => {
           const dateKey = formatDateKey(group.date);
           return (
             <div
               key={dateKey}
               data-date-key={dateKey}
-              ref={(el) => {
-                if (el) dayGroupRefs.current.set(dateKey, el);
-                else dayGroupRefs.current.delete(dateKey);
-              }}
+              ref={(el) => setDayGroupRef(dateKey, el)}
             >
               <DayGroup
                 date={group.date}
