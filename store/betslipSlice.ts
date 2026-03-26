@@ -22,10 +22,13 @@ const betslipSlice = createSlice({
         state.selections.push(action.payload);
       }
     },
+    clearSelections(state) {
+      state.selections = [];
+    },
   },
 });
 
-export const { toggleSelection } = betslipSlice.actions;
+export const { toggleSelection, clearSelections } = betslipSlice.actions;
 export const selectSelections = (state: RootState) => state.betslip.selections;
 export const selectCount = (state: RootState) => state.betslip.selections.length;
 export const selectIsSelected = (id: string) => (state: RootState) =>
